@@ -25,7 +25,7 @@ public class DependentFamilyMemberServiceTest {
 
     @Test
     void getSpecificDependentMemberById(){
-        var result = this.dependentFamilyMemberService.findMDependentFamilyMemberById(4L);
+        var result = this.dependentFamilyMemberService.findMDependentFamilyMemberById(2L);
 
         assertNotNull(result);
     }
