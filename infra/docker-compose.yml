@@ -1,0 +1,15 @@
+version: '3'
+services:
+  mysqldb:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=cuidar
+      - MYSQL_DATABASE=cuidardb
+      - MYSQL_TCP_PORT=3306
+      - MYSQL_USER=cuidar
+      - MYSQL_PASSWORD=cuidar@123
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
