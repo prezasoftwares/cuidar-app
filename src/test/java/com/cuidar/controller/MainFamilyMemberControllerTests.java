@@ -62,6 +62,7 @@ public class MainFamilyMemberControllerTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
     }
 
+    /*
     @Test
     public void updateMainFamilyMember_Name() throws Exception {
         RequestBuilder requestGetMainFamilyMember = get("/mainfamilymembers/1");
@@ -81,7 +82,7 @@ public class MainFamilyMemberControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Novo nome"));
-}
+}*/
 
 
     public static String asJsonString(final Object obj) {
