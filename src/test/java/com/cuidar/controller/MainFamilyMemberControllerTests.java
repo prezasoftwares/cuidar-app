@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Calendar;
 
-import com.cuidar.model.MainFamilyMember;
+import com.cuidar.dto.MainMemberCreateUpdateDTO;
 import com.cuidar.model.enums.FamilyMemberCivilStatus;
 import com.cuidar.model.enums.FamilyMemberGender;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,11 +51,18 @@ public class MainFamilyMemberControllerTests {
 
     @Test
     void createMainFamilyMember() throws Exception{
-        var mainFamilyMember = new MainFamilyMember("Principal 1", Calendar.getInstance().getTime(), FamilyMemberGender.Male, "99-999999", FamilyMemberCivilStatus.Single, "single@test123.com");
+        var newMainFamilyMember = new MainMemberCreateUpdateDTO();
+        newMainFamilyMember.setName("Principal DTO One");
+        newMainFamilyMember.setBirthDate(Calendar.getInstance());
+        newMainFamilyMember.setGender(FamilyMemberGender.Male);
+        newMainFamilyMember.setContactPhoneNumber("11-111111111");
+        newMainFamilyMember.setCivilStatus(FamilyMemberCivilStatus.Married);
+        newMainFamilyMember.setContactEmail("mainmember01@test.com");
+        newMainFamilyMember.setDocumentId("11166622200");
 
         mockMvc.perform( MockMvcRequestBuilders
                 .post("/mainfamilymembers")
-                .content(asJsonString(mainFamilyMember))
+                .content(asJsonString(newMainFamilyMember))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -82,7 +89,8 @@ public class MainFamilyMemberControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Novo nome"));
-}*/
+}
+*/
 
 
     public static String asJsonString(final Object obj) {

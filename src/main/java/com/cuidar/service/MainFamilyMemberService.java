@@ -1,18 +1,22 @@
 package com.cuidar.service;
 
+import com.cuidar.dto.MainMemberCreateUpdateDTO;
 import com.cuidar.exception.ResourceNotFoundException;
 import com.cuidar.model.MainFamilyMember;
 import com.cuidar.repository.MainFamilyMemberRepo;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class MainFamilyMemberService {
     private MainFamilyMemberRepo mainFMRepo;
+    private ModelMapper modelMapper;
 
-    public MainFamilyMemberService(MainFamilyMemberRepo mainFMrepo) {
+    public MainFamilyMemberService(MainFamilyMemberRepo mainFMrepo, ModelMapper modelMapper) {
         this.mainFMRepo = mainFMrepo;
+        this.modelMapper = modelMapper;
     }
 
     public Iterable<MainFamilyMember> findAllMainFamilyMembers() {
@@ -31,8 +35,9 @@ public class MainFamilyMemberService {
         }
     }
 
-    public MainFamilyMember createMainFamilyMember(MainFamilyMember mainFamilyMember) {
-        return this.mainFMRepo.save(mainFamilyMember);
+    public MainFamilyMember createMainFamilyMember(MainMemberCreateUpdateDTO mainFamilyMemberDto) {
+        MainFamilyMember newMainFamilyMember = mainFamilyMemberDto.convertToEntity(this.modelMapper);
+        return this.mainFMRepo.save(newMainFamilyMember);
     }
 
     public MainFamilyMember updateMainFamilyMember(Long id, MainFamilyMember mainFamilyMember) {

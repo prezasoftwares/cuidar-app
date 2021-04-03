@@ -1,5 +1,6 @@
 package com.cuidar.controller;
 
+import com.cuidar.dto.MainMemberCreateUpdateDTO;
 import com.cuidar.model.MainFamilyMember;
 import com.cuidar.service.MainFamilyMemberService;
 
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainFamilyMemberController {
 
     private MainFamilyMemberService mainFamilyMemberService;
-    public MainFamilyMemberController(MainFamilyMemberService mainFamilyMemberService) {
 
+    public MainFamilyMemberController(MainFamilyMemberService mainFamilyMemberService) {
         this.mainFamilyMemberService = mainFamilyMemberService;
     }
 
@@ -34,7 +35,7 @@ public class MainFamilyMemberController {
     }
 
     @PostMapping("")
-    public ResponseEntity<MainFamilyMember> create(@RequestBody MainFamilyMember mainFamilyMember){
+    public ResponseEntity<MainFamilyMember> create(@RequestBody MainMemberCreateUpdateDTO mainFamilyMember){
         return new ResponseEntity<>(this.mainFamilyMemberService.createMainFamilyMember(mainFamilyMember), HttpStatus.CREATED);
     }
 
