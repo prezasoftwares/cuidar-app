@@ -13,111 +13,64 @@ import javax.persistence.Table;
 
 import com.cuidar.model.enums.FamilyMemberCivilStatus;
 import com.cuidar.model.enums.FamilyMemberGender;
+import com.cuidar.model.enums.FamilyMemberHousingType;
+import com.cuidar.model.enums.FamilyMemberSchooling;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "main_familymember")
 public class MainFamilyMember extends FamilyMember{
 
     private static final long serialVersionUID = 1L;
 
+    //mandatory
     @Column(nullable = false)
     private String documentId;
-
-    //Address fields
+    @Column(nullable = false)
     private String addressPostalCode;
+    @Column(nullable = false)
     private String addressStreetName;
+    @Column(nullable = false)
     private String addressStreetNumber;
-    private String addressStreetComplement;
+    @Column(nullable = false)
     private String addressCity;
+    @Column(nullable = false)
     private String addressState;
-
-    // Civil status info
+    @Column(nullable = false)
     private FamilyMemberCivilStatus civilStatus;
+    @Column(nullable = false)
+    private FamilyMemberSchooling schooling;
 
-    //Contact info
+    //not-mandatory
+    private String addressStreetComplement;
     private String contactPhoneNumber;
     private String contactEmail;
+    private FamilyMemberHousingType housingType;
+    private String housingTypeNotes;
+    private String economicSituationNotes;
 
+
+    
     //Dependents
     @OneToMany(mappedBy = "mainFamilyMember", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<DependentFamilyMember> dependents = new HashSet<>();
-
-    public MainFamilyMember(){
-
-    }
 
     @JsonIgnore
     public Set<DependentFamilyMember> getDependents(){
         return dependents;
     }
-
-    public String getAddressPostalCode() {
-        return addressPostalCode;
-    }
-    public String getContactEmail() {
-        return contactEmail;
-    }
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-    public String getContactPhoneNumber() {
-        return contactPhoneNumber;
-    }
-    public void setContactPhoneNumber(String contactPhoneNumber) {
-        this.contactPhoneNumber = contactPhoneNumber;
-    }
-    public FamilyMemberCivilStatus getCivilStatus() {
-        return civilStatus;
-    }
-    public void setCivilStatus(FamilyMemberCivilStatus civilStatus) {
-        this.civilStatus = civilStatus;
-    }
-    public String getAddressState() {
-        return addressState;
-    }
-    public void setAddressState(String addressState) {
-        this.addressState = addressState;
-    }
-    public String getAddressCity() {
-        return addressCity;
-    }
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
-    }
-    public String getAddressStreetComplement() {
-        return addressStreetComplement;
-    }
-    public void setAddressStreetComplement(String addressStreetComplement) {
-        this.addressStreetComplement = addressStreetComplement;
-    }
-    public String getAddressStreetNumber() {
-        return addressStreetNumber;
-    }
-    public void setAddressStreetNumber(String addressStreetNumber) {
-        this.addressStreetNumber = addressStreetNumber;
-    }
-    public String getAddressStreetName() {
-        return addressStreetName;
-    }
-    public void setAddressStreetName(String addressStreetName) {
-        this.addressStreetName = addressStreetName;
-    }
-    public void setAddressPostalCode(String addressPostalCode) {
-        this.addressPostalCode = addressPostalCode;
-    }
-
-    public String getDocumentId() {
-        return documentId;
-    }
-
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
-    }
-    
+ 
     public MainFamilyMember(String name, Date birthDate, FamilyMemberGender gender, String documentId,
             FamilyMemberCivilStatus civilStatus, String contactEmail) {
         super(name, birthDate, gender);
+        
         this.documentId = documentId;
         this.civilStatus = civilStatus;
         this.contactEmail = contactEmail;

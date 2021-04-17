@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Calendar;
 
-import com.cuidar.dto.MainMemberCreateUpdateDTO;
+import com.cuidar.dto.MainMemberCreationDTO;
 import com.cuidar.model.enums.FamilyMemberCivilStatus;
 import com.cuidar.model.enums.FamilyMemberGender;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +51,7 @@ public class MainFamilyMemberControllerTests {
 
     @Test
     void createMainFamilyMember() throws Exception{
-        var newMainFamilyMember = new MainMemberCreateUpdateDTO();
+        var newMainFamilyMember = new MainMemberCreationDTO();
         newMainFamilyMember.setName("Principal DTO One");
         newMainFamilyMember.setBirthDate(Calendar.getInstance());
         newMainFamilyMember.setGender(FamilyMemberGender.Male);

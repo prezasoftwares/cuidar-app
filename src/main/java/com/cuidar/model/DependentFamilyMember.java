@@ -1,6 +1,7 @@
 package com.cuidar.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,12 @@ import com.cuidar.model.enums.FamilyMemberGender;
 import com.cuidar.model.enums.FamilyMemberLinkType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Setter
+@Getter
 @Table(name = "dependent_familymember")
 public class DependentFamilyMember extends FamilyMember {
 
@@ -40,7 +46,7 @@ public class DependentFamilyMember extends FamilyMember {
         return mainFamilyMember;
     }
 
-    public Long getMainFamilyMember_Id(){
+    public UUID getMainFamilyMember_Id(){
         return mainFamilyMember.getId();
     }
 

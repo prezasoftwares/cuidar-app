@@ -1,6 +1,8 @@
 package com.cuidar.service;
 
-import com.cuidar.dto.MainMemberCreateUpdateDTO;
+import java.util.UUID;
+
+import com.cuidar.dto.MainMemberCreationDTO;
 import com.cuidar.exception.ResourceNotFoundException;
 import com.cuidar.model.MainFamilyMember;
 import com.cuidar.repository.MainFamilyMemberRepo;
@@ -23,7 +25,7 @@ public class MainFamilyMemberService {
         return this.mainFMRepo.findAll();
     }
 
-    public MainFamilyMember findMainFamilyMemberById(Long mainFamilyMemberId) {
+    public MainFamilyMember findMainFamilyMemberById(UUID mainFamilyMemberId) {
         var mainMember = this.mainFMRepo.findById(mainFamilyMemberId);
 
         if (mainMember.isPresent()){
@@ -35,12 +37,12 @@ public class MainFamilyMemberService {
         }
     }
 
-    public MainFamilyMember createMainFamilyMember(MainMemberCreateUpdateDTO mainFamilyMemberDto) {
+    public MainFamilyMember createMainFamilyMember(MainMemberCreationDTO mainFamilyMemberDto) {
         MainFamilyMember newMainFamilyMember = mainFamilyMemberDto.convertToEntity(this.modelMapper);
         return this.mainFMRepo.save(newMainFamilyMember);
     }
 
-    public MainFamilyMember updateMainFamilyMember(Long id, MainFamilyMember mainFamilyMember) {
+    public MainFamilyMember updateMainFamilyMember(UUID id, MainFamilyMember mainFamilyMember) {
         mainFamilyMember.setId(id);
         return this.mainFMRepo.save(mainFamilyMember);
     }
