@@ -1,12 +1,13 @@
 package com.cuidar.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Calendar;
 import java.util.UUID;
-
-import javax.validation.ConstraintViolationException;
 
 import com.cuidar.exception.DomainValidationException;
 import com.cuidar.model.MainFamilyMember;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 @SpringBootTest
 public class CreateMainFamilyMemberServiceTest {
@@ -33,14 +35,17 @@ public class CreateMainFamilyMemberServiceTest {
 
     @BeforeEach
     public void initializeInstances(){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DATE, -1000);
         noFieldsInstance = new MainFamilyMember();
 
         allMandatoryFieldsInstance = new MainFamilyMember();
         allMandatoryFieldsInstance.setFullName("Full name");
-        allMandatoryFieldsInstance.setBirthDate(Calendar.getInstance().getTime());
+        allMandatoryFieldsInstance.setBirthDate(calendar.getTime());
         allMandatoryFieldsInstance.setGender(FamilyMemberGender.NoGender);
         allMandatoryFieldsInstance.setOccupation("No ocupation");
-        allMandatoryFieldsInstance.setDocumentId("1234567");
+        allMandatoryFieldsInstance.setDocumentId(UUID.randomUUID().toString());
         allMandatoryFieldsInstance.setAddressPostalCode("00000-000");
         allMandatoryFieldsInstance.setAddressStreetName("STREET");
         allMandatoryFieldsInstance.setAddressStreetNumber("123");
@@ -51,10 +56,10 @@ public class CreateMainFamilyMemberServiceTest {
 
         allFieldsInstance = new MainFamilyMember();
         allFieldsInstance.setFullName("Full name");
-        allFieldsInstance.setBirthDate(Calendar.getInstance().getTime());
+        allFieldsInstance.setBirthDate(calendar.getTime());
         allFieldsInstance.setGender(FamilyMemberGender.NoGender);
         allFieldsInstance.setOccupation("No ocupation");
-        allFieldsInstance.setDocumentId("1234567");
+        allFieldsInstance.setDocumentId(UUID.randomUUID().toString());
         allFieldsInstance.setAddressPostalCode("00000-000");
         allFieldsInstance.setAddressStreetName("STREET");
         allFieldsInstance.setAddressStreetNumber("123");
@@ -76,7 +81,7 @@ public class CreateMainFamilyMemberServiceTest {
     @Test
     public void whenSaveMainFamilyMemberWithNoFields_shouldThrowException(){
        
-        assertThrows(ConstraintViolationException.class, () ->
+        assertThrows(DataIntegrityViolationException.class, () ->
         {            
             createMainFamilyMemberService.createMainFamilyMember(noFieldsInstance);
         });
@@ -84,17 +89,22 @@ public class CreateMainFamilyMemberServiceTest {
 
     @Test
     public void whenSaveMainFamilyMemberWithAllMandatoryFields_shouldReturnMainMemberCreatedId(){
-        UUID createdUUID = createMainFamilyMemberService.createMainFamilyMember(allMandatoryFieldsInstance);
+        UUID createdUUID = UUID.randomUUID();
+        CreateMainFamilyMemberService localCreateMainFamilyService = mock(CreateMainFamilyMemberService.class);
+        
+        when(localCreateMainFamilyService.createMainFamilyMember(allMandatoryFieldsInstance)).thenReturn(createdUUID);
 
-        assertNotNull(createdUUID);
+        assertEquals(createdUUID, localCreateMainFamilyService.createMainFamilyMember(allMandatoryFieldsInstance));
     }
 
     @Test
     public void whenSaveMainFamilyMemberWithAllPossibleFields_shouldReturnMainMemberCreatedId(){
+        UUID createdUUID = UUID.randomUUID();
+        CreateMainFamilyMemberService localCreateMainFamilyService = mock(CreateMainFamilyMemberService.class);
         
-        UUID createdUUID = createMainFamilyMemberService.createMainFamilyMember(allFieldsInstance);
+        when(localCreateMainFamilyService.createMainFamilyMember(allFieldsInstance)).thenReturn(createdUUID);
 
-        assertNotNull(createdUUID);
+        assertEquals(createdUUID, localCreateMainFamilyService.createMainFamilyMember(allFieldsInstance));
     }
 
     @Test
@@ -103,6 +113,18 @@ public class CreateMainFamilyMemberServiceTest {
         {
             allMandatoryFieldsInstance.setHousingType(FamilyMemberHousingType.Other);
             allMandatoryFieldsInstance.setHousingTypeNotes("");
+            createMainFamilyMemberService.createMainFamilyMember(allMandatoryFieldsInstance);
+        });
+    }
+
+    @Test
+    public void whenSaveMainMemberFamilyTwiceSameDocumentId_shouldThrowException(){
+        assertThrows(DomainValidationException.class, () ->
+        {
+            allMandatoryFieldsInstance.setDocumentId("documentId-123");
+            createMainFamilyMemberService.createMainFamilyMember(allMandatoryFieldsInstance);
+
+            allMandatoryFieldsInstance.setDocumentId("documentId-123");
             createMainFamilyMemberService.createMainFamilyMember(allMandatoryFieldsInstance);
         });
     }

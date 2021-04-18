@@ -26,13 +26,10 @@ public class FamilyMember extends BaseModel {
 
     @Column(nullable = false)
     private String fullName;
-
     @Column(nullable = false)
     private Date birthDate;
-
     @Column(nullable = false)
     private FamilyMemberGender gender;
-
     @Column(nullable = false)
     private String occupation;
 

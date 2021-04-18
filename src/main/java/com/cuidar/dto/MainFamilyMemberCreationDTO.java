@@ -2,7 +2,7 @@ package com.cuidar.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.cuidar.model.MainFamilyMember;
@@ -24,31 +24,31 @@ public class MainFamilyMemberCreationDTO extends DTOMapper<MainFamilyMemberCreat
     }
 
     // mandatory-super class
-    @NotEmpty
+    @NotBlank(message = "Nome completo deve ser preenchido")
     private String fullName;
-    @NotNull
+    @NotNull(message = "Data de nascimento deve ser preenchida")
     private Date birthDate;
-    @NotNull
+    @NotNull(message = "Gênero deve ser preenchido")
     private FamilyMemberGender gender;
-    @NotEmpty
+    @NotBlank(message = "Ocupação deve ser preenchida")
     private String occupation;
 
     // mandatory
-    @NotEmpty
+    @NotBlank(message = "Número de documento deve ser preenchido")
     private String documentId;
-    @NotEmpty
+    @NotBlank(message = "Código postal deve ser preenchido")
     private String addressPostalCode;
-    @NotEmpty
+    @NotBlank(message = "Nome do logradouro deve ser preenchido")
     private String addressStreetName;
-    @NotEmpty
+    @NotBlank(message = "Número do logradouro deve ser preenchido")
     private String addressStreetNumber;
-    @NotEmpty
+    @NotBlank(message = "Cidade deve ser preenchido")
     private String addressCity;
-    @NotEmpty
+    @NotBlank(message = "Estado deve ser preenchido")
     private String addressState;
-    @NotNull
+    @NotNull(message = "Estado civil deve ser preenchido")
     private FamilyMemberCivilStatus civilStatus;
-    @NotNull
+    @NotNull(message = "Escolaridade deve ser preenchido")
     private FamilyMemberSchooling schooling;
 
     // not-mandatory

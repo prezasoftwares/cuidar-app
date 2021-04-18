@@ -16,17 +16,13 @@ public class FindMainFamilyMemberService {
         this.mainFMRepo = mainFMrepo;
     }
 
-    public Iterable<MainFamilyMember> findAllMainFamilyMembers() {
-        return this.mainFMRepo.findAll();
-    }
-
     public MainFamilyMember findMainFamilyMemberById(UUID mainFamilyMemberId) {
         var mainMember = this.mainFMRepo.findById(mainFamilyMemberId);
 
         if (mainMember.isPresent()) {
             return mainMember.get();
         } else {
-            throw new ResourceNotFoundException("Membro principal não foi encontrado");
+            throw new ResourceNotFoundException("Membro principal não foi encontrado", mainFamilyMemberId.toString());
         }
     }
 }

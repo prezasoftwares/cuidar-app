@@ -4,8 +4,6 @@ import java.util.UUID;
 
 import com.cuidar.model.DependentFamilyMember;
 
-//Encapsular as propriedades do dependente,
-// e não expor os dados do Membro Principal (e nem solicitar um payLoad com os dados do Membro Principal)
 public class DependentMemberDTO {
     private DependentFamilyMember dependentMember;
     private UUID mainFamilyMemberId;

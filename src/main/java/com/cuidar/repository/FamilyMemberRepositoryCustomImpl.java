@@ -1,6 +1,7 @@
 package com.cuidar.repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.cuidar.model.DependentFamilyMember;
+import com.cuidar.model.MainFamilyMember;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +22,7 @@ public class FamilyMemberRepositoryCustomImpl implements FamilyMemberRepositoryC
     private EntityManager entityManager;
 
     @Override
-    public List<DependentFamilyMember> findDependentFamlilyMembers(Long mainFamilyMemberId) {
+    public List<DependentFamilyMember> findDependentFamlilyMembers(UUID mainFamilyMemberId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<DependentFamilyMember> cq = cb.createQuery(DependentFamilyMember.class);
 
@@ -31,6 +33,26 @@ public class FamilyMemberRepositoryCustomImpl implements FamilyMemberRepositoryC
         cq.where(mainMemberId);
 
         return entityManager.createQuery(cq).getResultList();
+    }
+
+    @Override
+    public boolean existFamilyMemberByDocumentId(String documentId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<MainFamilyMember> cq = cb.createQuery(MainFamilyMember.class);
+
+        Root<MainFamilyMember> mainMember = cq.from(MainFamilyMember.class);
+
+        Predicate mainMemberDocumentId = cb.equal(mainMember.get("documentId"), documentId);
+
+        cq.where(mainMemberDocumentId);
+
+        var resultList = entityManager.createQuery(cq).getResultList();
+
+        if (resultList.isEmpty()){
+            return false;
+        }
+
+        return true;
     }
 
 }

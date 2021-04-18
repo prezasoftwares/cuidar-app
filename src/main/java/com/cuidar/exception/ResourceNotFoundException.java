@@ -3,10 +3,18 @@ package com.cuidar.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
+import lombok.Getter;
+import lombok.Setter;
 
-    public ResourceNotFoundException(String message) {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+@Getter
+@Setter
+public class ResourceNotFoundException extends RuntimeException {
+    
+    private String resourceName;
+
+    public ResourceNotFoundException(String message, String resourceName) {
         super(message);
+        this.resourceName = resourceName;
     }
 }

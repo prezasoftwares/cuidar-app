@@ -2,6 +2,7 @@ package com.cuidar.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.cuidar.dto.DependentMemberDTO;
 import com.cuidar.exception.ResourceNotFoundException;
@@ -36,7 +37,7 @@ public class DependentFamilyMemberService {
         return dependentList;
     }
 
-    public Iterable<DependentFamilyMember> findAllDependentsMembersFromMain(Long id) {
+    public Iterable<DependentFamilyMember> findAllDependentsMembersFromMain(UUID id) {
         return this.dependFMRepo.findDependentFamlilyMembers(id);
     }
 
@@ -50,11 +51,11 @@ public class DependentFamilyMemberService {
         return this.dependFMRepo.save(dependentFamilyMember);
     }
 
-    public DependentFamilyMember findMDependentFamilyMemberById(long id) {
+    public DependentFamilyMember findMDependentFamilyMemberById(UUID id) {
         if (this.dependFMRepo.findById(id).isPresent()) {
             return this.dependFMRepo.getOne(id);
         } else {
-            throw new ResourceNotFoundException("Membro dependente não encontrado");
+            throw new ResourceNotFoundException("Membro dependente não encontrado", id.toString());
         }
     }
 }

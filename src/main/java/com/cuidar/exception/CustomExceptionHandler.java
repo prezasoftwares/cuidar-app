@@ -12,31 +12,45 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-@SuppressWarnings({ "rawtype" })
+@SuppressWarnings({"all"})
 public class CustomExceptionHandler {
 
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler(DomainValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    ValidationErrorResponse onConstraintValidationException(ConstraintViolationException e) {
+    public APIExceptionResponse onDomainValidationException(DomainValidationException domainValidationException) {
         
-        ValidationErrorResponse error = new ValidationErrorResponse("Erro");
-        for (ConstraintViolation violation : e.getConstraintViolations()) {
-            error.getViolations().add(new Violation(violation.getPropertyPath().toString(), violation.getMessage()));
+        APIExceptionResponse response = new APIExceptionResponse("Erro na validação dos dados");
+        
+        for (String validationMessage : domainValidationException.getValidations()) {
+            response.getMessages().add(validationMessage);
         }
 
-        return error;
+        return response;
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public APIExceptionResponse onResourceNotFoundException(ResourceNotFoundException resourceNotFoundException) {
+        
+        APIExceptionResponse response = new APIExceptionResponse("Recurso não encontrado");
+        
+        response.getMessages().add(resourceNotFoundException.getResourceName());
+
+        return response;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    ValidationErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        ValidationErrorResponse error = new ValidationErrorResponse("Erro");
-        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-            error.getViolations().add(new Violation(fieldError.getField(), fieldError.getDefaultMessage()));
+    public APIExceptionResponse onMethodArgumentNotValidException(MethodArgumentNotValidException methodArgNotValidExc) {
+        APIExceptionResponse response = new APIExceptionResponse("Argumentos inválidos");
+
+        for (FieldError fieldError : methodArgNotValidExc.getBindingResult().getFieldErrors()) {
+            response.getMessages().add(fieldError.getDefaultMessage());
         }
-        return error;
+        return response;
     }
 
 }

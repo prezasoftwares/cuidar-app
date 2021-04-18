@@ -5,13 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
-import com.cuidar.constraints.MainFamilyMemberHousingTypeOtherConstraint;
 import com.cuidar.model.enums.FamilyMemberCivilStatus;
 import com.cuidar.model.enums.FamilyMemberGender;
 import com.cuidar.model.enums.FamilyMemberHousingType;
@@ -23,7 +22,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@MainFamilyMemberHousingTypeOtherConstraint
 @NoArgsConstructor
 @Getter
 @Setter
@@ -34,21 +32,21 @@ public class MainFamilyMember extends FamilyMember {
     private static final long serialVersionUID = 1L;
 
     // mandatory
-    @NotNull(message = "Número de documento deve ser preenchido")
+    @Column(nullable = false, unique = true)
     private String documentId;
-    @NotNull(message = "Código postal deve ser preenchido")
+    @Column(nullable = false)
     private String addressPostalCode;
-    @NotNull(message = "Nome do logradouro deve ser preenchido")
+    @Column(nullable = false)
     private String addressStreetName;
-    @NotNull(message = "Número do logradouro deve ser preenchido")
+    @Column(nullable = false)
     private String addressStreetNumber;
-    @NotNull(message = "Cidade deve ser preenchido")
+    @Column(nullable = false)
     private String addressCity;
-    @NotNull(message = "Estado deve ser preenchido")
+    @Column(nullable = false)
     private String addressState;
-    @NotNull(message = "Estado civil deve ser preenchido")
+    @Column(nullable = false)
     private FamilyMemberCivilStatus civilStatus;
-    @NotNull(message = "Escolaridade deve ser preenchido")
+    @Column(nullable = false)
     private FamilyMemberSchooling schooling;
 
     // not-mandatory

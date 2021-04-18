@@ -1,6 +1,7 @@
 package com.cuidar.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.cuidar.dto.DependentMemberDTO;
 import com.cuidar.model.DependentFamilyMember;
@@ -31,7 +32,7 @@ public class DependentFamilyMemberController {
     }
 
     @GetMapping("/mainmember/{mainMemberId}")
-    public Iterable<DependentFamilyMember> get(@PathVariable(name = "mainMemberId") Long mainMemberId) {
+    public Iterable<DependentFamilyMember> get(@PathVariable(name = "mainMemberId") UUID mainMemberId) {
         return this.familymemberservice.findAllDependentsMembersFromMain(mainMemberId);
     }
 
