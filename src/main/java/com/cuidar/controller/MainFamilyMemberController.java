@@ -2,10 +2,14 @@ package com.cuidar.controller;
 
 import java.util.UUID;
 
-import com.cuidar.dto.MainMemberCreationDTO;
-import com.cuidar.model.MainFamilyMember;
-import com.cuidar.service.MainFamilyMemberService;
+import javax.validation.Valid;
 
+import com.cuidar.dto.MainFamilyMemberCreationDTO;
+import com.cuidar.model.MainFamilyMember;
+import com.cuidar.service.CreateMainFamilyMemberService;
+import com.cuidar.service.FindMainFamilyMemberService;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,24 +23,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("mainfamilymembers")
 public class MainFamilyMemberController {
 
-    private MainFamilyMemberService mainFamilyMemberService;
+    private CreateMainFamilyMemberService createMainFamilyMemberService;
+    private FindMainFamilyMemberService findMainFamilyMemberService;
+    private ModelMapper modelMapper;
 
-    public MainFamilyMemberController(MainFamilyMemberService mainFamilyMemberService) {
-        this.mainFamilyMemberService = mainFamilyMemberService;
-    }
-
-    @GetMapping("")
-    public Iterable<MainFamilyMember> get() {
-        return this.mainFamilyMemberService.findAllMainFamilyMembers();
+    public MainFamilyMemberController(CreateMainFamilyMemberService createMainFamilyMemberService,
+            FindMainFamilyMemberService findMainFamilyMemberService, ModelMapper modelMapper) {
+        this.createMainFamilyMemberService = createMainFamilyMemberService;
+        this.findMainFamilyMemberService = findMainFamilyMemberService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MainFamilyMember> get(@PathVariable(name = "id") UUID mainFamilyMemberId){
-        return new ResponseEntity<>(this.mainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId), HttpStatus.OK);
+    public ResponseEntity<MainFamilyMember> get(@PathVariable(name = "id") UUID mainFamilyMemberId) {
+        return new ResponseEntity<>(this.findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId),
+                HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<MainFamilyMember> create(@RequestBody MainMemberCreationDTO mainFamilyMember){
-        return new ResponseEntity<>(this.mainFamilyMemberService.createMainFamilyMember(mainFamilyMember), HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@Valid @RequestBody MainFamilyMemberCreationDTO mainFamilyMember) {
+        MainFamilyMember newMainFamilyMember = mainFamilyMember.convertToEntity(this.modelMapper);
+        return new ResponseEntity<>(this.createMainFamilyMemberService.createMainFamilyMember(newMainFamilyMember),
+                HttpStatus.CREATED);
     }
 }

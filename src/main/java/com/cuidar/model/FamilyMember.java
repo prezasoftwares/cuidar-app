@@ -18,9 +18,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name="familymember")
+@Table(name = "familymember")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class FamilyMember extends BaseModel{
+public class FamilyMember extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class FamilyMember extends BaseModel{
 
     @Column(nullable = false)
     private Date birthDate;
-    
+
     @Column(nullable = false)
     private FamilyMemberGender gender;
 

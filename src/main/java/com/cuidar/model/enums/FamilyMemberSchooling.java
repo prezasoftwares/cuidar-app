@@ -1,9 +1,5 @@
 package com.cuidar.model.enums;
 
 public enum FamilyMemberSchooling {
-    Illiterate,
-    Basic,
-    Fundamental,
-    HighSchool,
-    University
+    Illiterate, Basic, Fundamental, HighSchool, University
 }

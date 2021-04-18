@@ -1,6 +1,6 @@
 package com.cuidar.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -31,11 +31,12 @@ public class DependentFamilyMember extends FamilyMember {
     @JoinColumn(name = "mainFamilyMember_id")
     private MainFamilyMember mainFamilyMember;
 
-    public DependentFamilyMember(){
+    public DependentFamilyMember() {
 
     }
 
-    public DependentFamilyMember(String name, Date birthDate, FamilyMemberGender gender, FamilyMemberLinkType linkTypeToMainMember, MainFamilyMember mainFamilyMember) {
+    public DependentFamilyMember(String name, Date birthDate, FamilyMemberGender gender,
+            FamilyMemberLinkType linkTypeToMainMember, MainFamilyMember mainFamilyMember) {
         super(name, birthDate, gender);
         this.linkTypeToMainMember = linkTypeToMainMember;
         this.mainFamilyMember = mainFamilyMember;
@@ -46,11 +47,11 @@ public class DependentFamilyMember extends FamilyMember {
         return mainFamilyMember;
     }
 
-    public UUID getMainFamilyMember_Id(){
+    public UUID getMainFamilyMember_Id() {
         return mainFamilyMember.getId();
     }
 
-    public void setMainFamilyMember(MainFamilyMember mainFamilymember){
+    public void setMainFamilyMember(MainFamilyMember mainFamilymember) {
         this.mainFamilyMember = mainFamilymember;
     }
 

@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class BaseModel implements Serializable{
+public abstract class BaseModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

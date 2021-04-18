@@ -11,26 +11,28 @@ import com.cuidar.repository.DependentFamilyMemberRepo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DependentFamilyMemberService{
-    
-    private DependentFamilyMemberRepo dependFMRepo;
-    private MainFamilyMemberService mainFamilyMemberService;
+public class DependentFamilyMemberService {
 
-    public DependentFamilyMemberService(DependentFamilyMemberRepo dependFMRepo, MainFamilyMemberService mainFamilyMemberService) {
+    private DependentFamilyMemberRepo dependFMRepo;
+    private FindMainFamilyMemberService findMainFamilyMemberService;
+
+    public DependentFamilyMemberService(DependentFamilyMemberRepo dependFMRepo,
+            FindMainFamilyMemberService findMainFamilyMemberService) {
         this.dependFMRepo = dependFMRepo;
-        this.mainFamilyMemberService = mainFamilyMemberService;
+        this.findMainFamilyMemberService = findMainFamilyMemberService;
     }
 
     public List<DependentMemberDTO> findAllDependents() {
-        
+
         List<DependentMemberDTO> dependentList = new ArrayList<>();
 
         var foundDependentsFromRepo = this.dependFMRepo.findAll();
 
         for (DependentFamilyMember dependentFamilyMember : foundDependentsFromRepo) {
-            dependentList.add(new DependentMemberDTO(dependentFamilyMember.getMainFamilyMember_Id(), dependentFamilyMember));
+            dependentList
+                    .add(new DependentMemberDTO(dependentFamilyMember.getMainFamilyMember_Id(), dependentFamilyMember));
         }
-        
+
         return dependentList;
     }
 
@@ -38,8 +40,9 @@ public class DependentFamilyMemberService{
         return this.dependFMRepo.findDependentFamlilyMembers(id);
     }
 
-    public DependentFamilyMember createDependentFamilyMember(DependentMemberDTO dependentMemberDTO){
-        var mainMember = this.mainFamilyMemberService.findMainFamilyMemberById(dependentMemberDTO.getMainFamilyMemberId());
+    public DependentFamilyMember createDependentFamilyMember(DependentMemberDTO dependentMemberDTO) {
+        var mainMember = this.findMainFamilyMemberService
+                .findMainFamilyMemberById(dependentMemberDTO.getMainFamilyMemberId());
 
         var dependentFamilyMember = dependentMemberDTO.getDependentMember();
         dependentFamilyMember.setMainFamilyMember(mainMember);
@@ -48,11 +51,9 @@ public class DependentFamilyMemberService{
     }
 
     public DependentFamilyMember findMDependentFamilyMemberById(long id) {
-        if (this.dependFMRepo.findById(id).isPresent()){
+        if (this.dependFMRepo.findById(id).isPresent()) {
             return this.dependFMRepo.getOne(id);
-        }
-        else
-        {
+        } else {
             throw new ResourceNotFoundException("Membro dependente não encontrado");
         }
     }

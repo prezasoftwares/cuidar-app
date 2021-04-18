@@ -27,12 +27,10 @@ public class FamilyMemberRepositoryCustomImpl implements FamilyMemberRepositoryC
         Root<DependentFamilyMember> dependentMember = cq.from(DependentFamilyMember.class);
 
         Predicate mainMemberId = cb.equal(dependentMember.get("mainFamilyMember"), mainFamilyMemberId);
-        
+
         cq.where(mainMemberId);
 
-        return entityManager
-            .createQuery(cq)
-            .getResultList();
+        return entityManager.createQuery(cq).getResultList();
     }
-    
+
 }

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DependentFamilyMemberController {
 
     private DependentFamilyMemberService familymemberservice;
-    
+
     public DependentFamilyMemberController(DependentFamilyMemberService familymemberservice) {
         this.familymemberservice = familymemberservice;
     }
@@ -31,13 +31,14 @@ public class DependentFamilyMemberController {
     }
 
     @GetMapping("/mainmember/{mainMemberId}")
-    public Iterable<DependentFamilyMember> get(@PathVariable(name = "mainMemberId") Long mainMemberId){
+    public Iterable<DependentFamilyMember> get(@PathVariable(name = "mainMemberId") Long mainMemberId) {
         return this.familymemberservice.findAllDependentsMembersFromMain(mainMemberId);
     }
 
     @PostMapping("")
-    public ResponseEntity<DependentFamilyMember> create(@RequestBody DependentMemberDTO dependentFamilyMember){
-        return new ResponseEntity<>(this.familymemberservice.createDependentFamilyMember(dependentFamilyMember), HttpStatus.OK);
-    }  
+    public ResponseEntity<DependentFamilyMember> create(@RequestBody DependentMemberDTO dependentFamilyMember) {
+        return new ResponseEntity<>(this.familymemberservice.createDependentFamilyMember(dependentFamilyMember),
+                HttpStatus.OK);
+    }
 
 }

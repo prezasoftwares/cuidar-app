@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DependentFamilyMemberRepo extends JpaRepository<DependentFamilyMember, Long>, FamilyMemberRepositoryCustom{}
+public interface DependentFamilyMemberRepo
+        extends JpaRepository<DependentFamilyMember, Long>, FamilyMemberRepositoryCustom {
+}

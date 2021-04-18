@@ -26,6 +26,7 @@ public class DependentMemberDTO {
     public void setMainFamilyMember(UUID mainFamilyMemberId) {
         this.mainFamilyMemberId = mainFamilyMemberId;
     }
+
     public void setDependentMember(DependentFamilyMember dependentMember) {
         this.dependentMember = dependentMember;
     }
