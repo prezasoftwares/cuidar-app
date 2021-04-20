@@ -1,15 +1,13 @@
 version: '3'
 services:
-  mysqldb:
-    image: mysql:8.0
+  postgres:
+    image: postgres:13
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=cuidar
-      - MYSQL_DATABASE=cuidardb
-      - MYSQL_TCP_PORT=3306
-      - MYSQL_USER=cuidar
-      - MYSQL_PASSWORD=cuidar@123
+      - POSTGRES_PASSWORD=cuidar
+      - POSTGRES_USER=cuidarapiuser 
+      - POSTGRES_DB=cuidardbdev
     ports:
-      - '3306:3306'
+      - '5432:5432'
     expose:
-      - '3306'
+      - '5432'
