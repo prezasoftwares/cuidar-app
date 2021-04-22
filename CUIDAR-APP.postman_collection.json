@@ -6,24 +6,23 @@
 	},
 	"item": [
 		{
-			"name": "FamilyMembers-Main-get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/mainfamilymembers",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"mainfamilymembers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "FamilyMembers-Main-post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"responseBody = responseBody.replace('\"', '')\r",
+							"responseBody = responseBody.replace('\"', '')\r",
+							"postman.setEnvironmentVariable(\"mainFamilyMemberCreatedUUID\", responseBody);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "POST",
 				"header": [
@@ -35,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n        \"name\": \"Membro Principal PostMan\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"documentId\": \"123456789-35\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"Rua do Membro principal\",\r\n        \"addressStreetNumber\": \"123\",\r\n        \"addressStreetComplement\": \"Casa 2\",\r\n        \"addressCity\": \"Cidade\",\r\n        \"addressState\": \"UF\",\r\n        \"civilStatus\": \"Single\",\r\n        \"contactPhoneNumber\": \"1193333198\",\r\n        \"contactEmail\": \"membro@principal.postman.com\"\r\n    }"
+					"raw": " {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\"\r\n    }"
 				},
 				"url": {
 					"raw": "{{url}}/mainfamilymembers",
@@ -50,63 +49,21 @@
 			"response": []
 		},
 		{
-			"name": "FamilyMembers-Dependent-get",
+			"name": "FamilyMembers-Main-getById",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/dependentfamilymembers",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"dependentfamilymembers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "FamilyMembers-DependentFromMainMember-get",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/dependentfamilymembers/mainmember/1",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"dependentfamilymembers",
-						"mainmember",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "FamilyMembers-Dependent-post",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"dependentMember\": {\r\n            \"name\": \"Dependente 1 do 1\",\r\n            \"birthDate\": \"2021-03-12T00:27:15.000+00:00\",\r\n            \"gender\": \"Female\",\r\n            \"linkTypeToMainMember\": \"Child\"\r\n        },\r\n        \"mainFamilyMemberId\":1\r\n}"
+				"auth": {
+					"type": "noauth"
 				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "{{url}}/dependentfamilymembers",
+					"raw": "{{url}}/mainfamilymembers/{{mainFamilyMemberCreatedUUID}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"dependentfamilymembers"
+						"mainfamilymembers",
+						"{{mainFamilyMemberCreatedUUID}}"
 					]
 				}
 			},
