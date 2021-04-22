@@ -39,7 +39,7 @@ public class FamilyMemberRepositoryCustomImpl implements FamilyMemberRepositoryC
     public boolean existFamilyMemberByDocumentId(String documentId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<MainFamilyMember> cq = cb.createQuery(MainFamilyMember.class);
-
+        
         Root<MainFamilyMember> mainMember = cq.from(MainFamilyMember.class);
 
         Predicate mainMemberDocumentId = cb.equal(mainMember.get("documentId"), documentId);

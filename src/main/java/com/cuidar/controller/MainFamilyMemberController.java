@@ -4,14 +4,14 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import com.cuidar.dto.MainFamilyMemberCreationDTO;
+import com.cuidar.dto.MainFamilyMemberDTO;
 import com.cuidar.model.MainFamilyMember;
 import com.cuidar.service.CreateMainFamilyMemberService;
 import com.cuidar.service.FindMainFamilyMemberService;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;s
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("mainfamilymembers")
 public class MainFamilyMemberController {
 
@@ -36,13 +37,16 @@ public class MainFamilyMemberController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MainFamilyMember> get(@PathVariable(name = "id") UUID mainFamilyMemberId) {
-        return new ResponseEntity<>(this.findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId),
-                HttpStatus.OK);
+    public ResponseEntity<MainFamilyMemberDTO> get(@PathVariable(name = "id") UUID mainFamilyMemberId) {
+        
+        MainFamilyMemberDTO foundMainFamilyMemberDTO = new MainFamilyMemberDTO();
+        foundMainFamilyMemberDTO = foundMainFamilyMemberDTO.convertToDto(this.modelMapper, this.findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId));
+
+        return new ResponseEntity<>(foundMainFamilyMemberDTO, HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<UUID> create(@Valid @RequestBody MainFamilyMemberCreationDTO mainFamilyMember) {
+    public ResponseEntity<UUID> create(@Valid @RequestBody MainFamilyMemberDTO mainFamilyMember) {
         MainFamilyMember newMainFamilyMember = mainFamilyMember.convertToEntity(this.modelMapper);
         return new ResponseEntity<>(this.createMainFamilyMemberService.createMainFamilyMember(newMainFamilyMember),
                 HttpStatus.CREATED);

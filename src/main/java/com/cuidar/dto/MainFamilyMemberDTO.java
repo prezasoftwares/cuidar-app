@@ -17,10 +17,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MainFamilyMemberCreationDTO extends DTOMapper<MainFamilyMemberCreationDTO, MainFamilyMember> {
+public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFamilyMember> {
 
-    public MainFamilyMemberCreationDTO() {
-        super(MainFamilyMemberCreationDTO.class, MainFamilyMember.class);
+    public MainFamilyMemberDTO() {
+        super(MainFamilyMemberDTO.class, MainFamilyMember.class);
     }
 
     // mandatory-super class
