@@ -48,7 +48,6 @@ public class MainFamilyMemberController {
     @PostMapping("")
     public ResponseEntity<UUID> create(@Valid @RequestBody MainFamilyMemberDTO mainFamilyMember) {
         MainFamilyMember newMainFamilyMember = mainFamilyMember.convertToEntity(this.modelMapper);
-        return new ResponseEntity<>(this.createMainFamilyMemberService.createMainFamilyMember(newMainFamilyMember),
-                HttpStatus.CREATED);
+        return new ResponseEntity<>(this.createMainFamilyMemberService.createMainFamilyMember(newMainFamilyMember), HttpStatus.CREATED);
     }
 }

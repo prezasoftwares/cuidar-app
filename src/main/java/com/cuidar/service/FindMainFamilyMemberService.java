@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FindMainFamilyMemberService {
-    private MainFamilyMemberRepo mainFMRepo;
+    private MainFamilyMemberRepo mainFamilyMemberRepo;
 
-    public FindMainFamilyMemberService(MainFamilyMemberRepo mainFMrepo) {
-        this.mainFMRepo = mainFMrepo;
+    public FindMainFamilyMemberService(MainFamilyMemberRepo mainFamilyMemberRepo) {
+        this.mainFamilyMemberRepo = mainFamilyMemberRepo;
     }
 
     public MainFamilyMember findMainFamilyMemberById(UUID mainFamilyMemberId) {
-        var mainMember = this.mainFMRepo.findById(mainFamilyMemberId);
+        var mainMember = this.mainFamilyMemberRepo.findById(mainFamilyMemberId);
 
         if (mainMember.isPresent()) {
             return mainMember.get();

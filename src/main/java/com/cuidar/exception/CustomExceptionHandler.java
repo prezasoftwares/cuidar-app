@@ -23,7 +23,7 @@ public class CustomExceptionHandler {
         APIExceptionResponse response = new APIExceptionResponse("Erro na validação dos dados");
         
         for (String validationMessage : domainValidationException.getValidations()) {
-            response.getMessages().add(validationMessage);
+            response.getErrorList().add(new ErrorDetail(validationMessage, ""));
         }
 
         return response;
@@ -36,7 +36,7 @@ public class CustomExceptionHandler {
         
         APIExceptionResponse response = new APIExceptionResponse("Recurso não encontrado");
         
-        response.getMessages().add(resourceNotFoundException.getResourceName());
+        response.getErrorList().add(new ErrorDetail(resourceNotFoundException.getResourceName(), resourceNotFoundException.getClass().toString()));
 
         return response;
     }
@@ -48,7 +48,7 @@ public class CustomExceptionHandler {
         APIExceptionResponse response = new APIExceptionResponse("Argumentos inválidos");
 
         for (FieldError fieldError : methodArgNotValidExc.getBindingResult().getFieldErrors()) {
-            response.getMessages().add(fieldError.getDefaultMessage());
+            response.getErrorList().add(new ErrorDetail(fieldError.getDefaultMessage(), fieldError.getField()));
         }
         return response;
     }

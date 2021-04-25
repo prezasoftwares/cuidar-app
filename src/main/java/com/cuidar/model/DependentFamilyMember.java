@@ -24,11 +24,13 @@ public class DependentFamilyMember extends FamilyMember {
 
     private static final long serialVersionUID = 1L;
 
+    private String documentId;
+
     @Column(nullable = false)
     private FamilyMemberLinkType linkTypeToMainMember;
 
     @ManyToOne
-    @JoinColumn(name = "mainFamilyMember_id")
+    @JoinColumn(name = "FK_mainFamilyMemberId")
     private MainFamilyMember mainFamilyMember;
 
     public DependentFamilyMember() {
@@ -49,17 +51,5 @@ public class DependentFamilyMember extends FamilyMember {
 
     public UUID getMainFamilyMember_Id() {
         return mainFamilyMember.getId();
-    }
-
-    public void setMainFamilyMember(MainFamilyMember mainFamilymember) {
-        this.mainFamilyMember = mainFamilymember;
-    }
-
-    public FamilyMemberLinkType getLinkTypeToMainMember() {
-        return linkTypeToMainMember;
-    }
-
-    public void setLinkTypeToMainMember(FamilyMemberLinkType linkTypeToMainMember) {
-        this.linkTypeToMainMember = linkTypeToMainMember;
     }
 }

@@ -7,21 +7,26 @@ import com.cuidar.repository.MainFamilyMemberRepo;
 
 import org.springframework.stereotype.Service;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Service
+@Getter
+@Setter
 public class CreateMainFamilyMemberService {
-    private MainFamilyMemberRepo mainFMRepo;
+    private MainFamilyMemberRepo mainFamilyMemberRepo;
     private ValidateMainFamilyMemberService validateMainFamilyMemberService;
 
-    public CreateMainFamilyMemberService(MainFamilyMemberRepo mainFMrepo, ValidateMainFamilyMemberService validateMainFamilyMemberService) {
-        this.mainFMRepo = mainFMrepo;
+    public CreateMainFamilyMemberService(MainFamilyMemberRepo mainFamilyMemberRepo, ValidateMainFamilyMemberService validateMainFamilyMemberService) {
+        this.mainFamilyMemberRepo = mainFamilyMemberRepo;
         this.validateMainFamilyMemberService = validateMainFamilyMemberService;
     }
 
-    public UUID createMainFamilyMember(MainFamilyMember newMainFamilyMember) {
-        validateMainFamilyMemberService.validate(newMainFamilyMember);
+    public UUID createMainFamilyMember(MainFamilyMember mainFamilyMember) {
+        validateMainFamilyMemberService.validate(mainFamilyMember);
 
-        MainFamilyMember savedFamilyMember = this.mainFMRepo.save(newMainFamilyMember);     
+        MainFamilyMember createdMainFamilyMember = this.mainFamilyMemberRepo.save(mainFamilyMember);     
 
-        return savedFamilyMember.getId();
+        return createdMainFamilyMember.getId();
     }
 }

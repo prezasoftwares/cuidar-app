@@ -20,7 +20,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 
 @SpringBootTest
 public class CreateMainFamilyMemberServiceTest {
@@ -30,14 +29,12 @@ public class CreateMainFamilyMemberServiceTest {
 
     private MainFamilyMember allMandatoryFieldsInstance;
     private MainFamilyMember allFieldsInstance;
-    private MainFamilyMember noFieldsInstance;
 
     @BeforeEach
     public void initializeInstances(){
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.DATE, -1000);
-        noFieldsInstance = new MainFamilyMember();
 
         allMandatoryFieldsInstance = new MainFamilyMember();
         allMandatoryFieldsInstance.setFullName("Full name");
@@ -78,15 +75,6 @@ public class CreateMainFamilyMemberServiceTest {
     }
 
     @Test
-    public void whenSaveMainFamilyMemberWithNoFields_shouldThrowException(){
-       
-        assertThrows(DataIntegrityViolationException.class, () ->
-        {            
-            createMainFamilyMemberService.createMainFamilyMember(noFieldsInstance);
-        });
-    }
-
-    @Test
     public void whenSaveMainFamilyMemberWithAllMandatoryFields_shouldReturnMainMemberCreatedId(){
         UUID createdUUID = UUID.randomUUID();
         CreateMainFamilyMemberService localCreateMainFamilyService = mock(CreateMainFamilyMemberService.class);
@@ -112,18 +100,6 @@ public class CreateMainFamilyMemberServiceTest {
         {
             allMandatoryFieldsInstance.setHousingType(FamilyMemberHousingType.Other);
             allMandatoryFieldsInstance.setHousingTypeNotes("");
-            createMainFamilyMemberService.createMainFamilyMember(allMandatoryFieldsInstance);
-        });
-    }
-
-    @Test
-    public void whenSaveMainMemberFamilyTwiceSameDocumentId_shouldThrowException(){
-        assertThrows(DomainValidationException.class, () ->
-        {
-            allMandatoryFieldsInstance.setDocumentId("documentId-123");
-            createMainFamilyMemberService.createMainFamilyMember(allMandatoryFieldsInstance);
-
-            allMandatoryFieldsInstance.setDocumentId("documentId-123");
             createMainFamilyMemberService.createMainFamilyMember(allMandatoryFieldsInstance);
         });
     }

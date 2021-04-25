@@ -23,7 +23,6 @@ public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFami
         super(MainFamilyMemberDTO.class, MainFamilyMember.class);
     }
 
-    // mandatory-super class
     @NotBlank(message = "Nome completo deve ser preenchido")
     private String fullName;
     @NotNull(message = "Data de nascimento deve ser preenchida")
@@ -33,7 +32,6 @@ public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFami
     @NotBlank(message = "Ocupação deve ser preenchida")
     private String occupation;
 
-    // mandatory
     @NotBlank(message = "Número de documento deve ser preenchido")
     private String documentId;
     @NotBlank(message = "Código postal deve ser preenchido")
@@ -51,7 +49,6 @@ public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFami
     @NotNull(message = "Escolaridade deve ser preenchido")
     private FamilyMemberSchooling schooling;
 
-    // not-mandatory
     private String addressStreetComplement;
     private String contactPhoneNumber;
     private String contactEmail;

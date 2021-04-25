@@ -11,7 +11,7 @@ import lombok.Setter;
 public class APIExceptionResponse {
     private String title;
 
-    private List<String> messages = new ArrayList<>();
+    private List<ErrorDetail> errorList = new ArrayList<>();
 
     public APIExceptionResponse(String title) {
         this.title = title;
