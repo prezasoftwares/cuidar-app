@@ -1,7 +1,6 @@
 package com.cuidar.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -13,26 +12,19 @@ import com.cuidar.model.enums.FamilyMemberGender;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 
 @SpringBootTest
 public class CreateDependentFamilyMemberServiceTest {
     
-    @Autowired
-    private CreateDependentFamilyMemberService createDependentFamilyMemberService;
-
     private DependentFamilyMember allMandatoryFieldsInstance;
     private DependentFamilyMember allFieldsInstance;
-    private DependentFamilyMember noFieldsInstance;
 
     @BeforeEach
     public void initializeInstances(){
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.DATE, -1000);
-        noFieldsInstance = new DependentFamilyMember();
 
         allMandatoryFieldsInstance = new DependentFamilyMember();
         allMandatoryFieldsInstance.setFullName("Full name");
