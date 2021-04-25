@@ -43,15 +43,6 @@ public class CreateDependentFamilyMemberServiceTest {
     }
 
     @Test
-    public void whenSaveDependentFamilyMemberWithNoFields_shouldThrowException(){
-       
-        assertThrows(DataIntegrityViolationException.class, () ->
-        {            
-            createDependentFamilyMemberService.createDependentFamilyMember(noFieldsInstance);
-        });
-    }
-
-    @Test
     public void whenSaveDependentFamilyMemberWithAllMandatoryFields_shouldReturnMainMemberCreatedId(){
         UUID createdUUID = UUID.randomUUID();
         CreateDependentFamilyMemberService localCreateDependentFamilyService = mock(CreateDependentFamilyMemberService.class);
