@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MainFamilyMemberRepo extends JpaRepository<MainFamilyMember, UUID>, FamilyMemberRepositoryCustom {
+public interface MainFamilyMemberRepo extends JpaRepository<MainFamilyMember, UUID> {
+    boolean existsMainFamilyMemberByDocumentId(String documentId);
 }

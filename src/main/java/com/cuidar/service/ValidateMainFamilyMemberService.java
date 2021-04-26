@@ -5,26 +5,26 @@ import java.util.Calendar;
 import com.cuidar.exception.DomainValidationException;
 import com.cuidar.model.MainFamilyMember;
 import com.cuidar.model.enums.FamilyMemberHousingType;
-import com.cuidar.repository.MainFamilyMemberRepo;
 
 import org.springframework.stereotype.Service;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Service
+@Getter
+@Setter
 public class ValidateMainFamilyMemberService {
-    private MainFamilyMemberRepo mainFamilyMemberRepo;
+    private FindMainFamilyMemberService findMainFamilyMemberService;
 
-    public ValidateMainFamilyMemberService(MainFamilyMemberRepo mainFamilyMemberRepo) {
-        this.mainFamilyMemberRepo = mainFamilyMemberRepo;    
-    }
-
-    public void setMainFamilyMemberRepo(MainFamilyMemberRepo mainFamilyMemberRepo){
-        this.mainFamilyMemberRepo = mainFamilyMemberRepo;
+    public ValidateMainFamilyMemberService(FindMainFamilyMemberService findMainFamilyMemberService) {
+        this.findMainFamilyMemberService = findMainFamilyMemberService;    
     }
 
     public void validate(MainFamilyMember mainFamilyMember) {
         DomainValidationException validationExc = new DomainValidationException("Validação dos dados do membro principal");
 
-        if (this.mainFamilyMemberRepo.existFamilyMemberByDocumentId(mainFamilyMember.getDocumentId())){
+        if (this.findMainFamilyMemberService.existsMainFamilyMemberByDocumentId(mainFamilyMember.getDocumentId())){
             validationExc.addMessage("O número de documento informado já foi utilizado em outro cadastro");
         }
 

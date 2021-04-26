@@ -3,6 +3,7 @@ package com.cuidar.service;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Calendar;
@@ -61,12 +62,12 @@ public class ValidateMainFamilyMemberServiceTest {
 
     @Test
     public void whenValidateMainFamilyMemberWithAlreadyExistentDocumentId_shouldThrowException() {
+        FindMainFamilyMemberService mockedFindMainFamilyMemberService = mock(FindMainFamilyMemberService.class);
 
-        // mock a chamada do repositório pra simular que já foi cadastrado outro membro com o documento informado
-        when(mockedMainFamilyMemberRepo.existFamilyMemberByDocumentId(anyString())).thenReturn(true);
+        when(mockedFindMainFamilyMemberService.existsMainFamilyMemberByDocumentId(anyString())).thenReturn(true);
 
         assertThrows(DomainValidationException.class, () -> {
-            validateMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainFamilyMemberRepo);
+            validateMainFamilyMemberService.setFindMainFamilyMemberService(mockedFindMainFamilyMemberService);
             validateMainFamilyMemberService.validate(regularMainMember);
         });
 

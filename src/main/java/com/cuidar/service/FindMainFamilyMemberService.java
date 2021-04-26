@@ -8,7 +8,12 @@ import com.cuidar.repository.MainFamilyMemberRepo;
 
 import org.springframework.stereotype.Service;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Service
+@Getter
+@Setter
 public class FindMainFamilyMemberService {
     private MainFamilyMemberRepo mainFamilyMemberRepo;
 
@@ -24,5 +29,9 @@ public class FindMainFamilyMemberService {
         } else {
             throw new ResourceNotFoundException("Membro principal não foi encontrado", mainFamilyMemberId.toString());
         }
+    }
+
+    public boolean existsMainFamilyMemberByDocumentId(String documentId){
+        return mainFamilyMemberRepo.existsMainFamilyMemberByDocumentId(documentId);
     }
 }

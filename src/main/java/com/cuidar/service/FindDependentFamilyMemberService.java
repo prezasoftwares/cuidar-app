@@ -21,6 +21,6 @@ public class FindDependentFamilyMemberService {
     }
 
     public Iterable<DependentFamilyMember> findAllDependentsMembersFromMain(MainFamilyMember mainFamilyMember) {
-        return this.dependentFamilyMemberRepo.findByMainFamilyMemberId(mainFamilyMember);
+        return this.dependentFamilyMemberRepo.findBymainFamilyMember(mainFamilyMember);
     }
 }

@@ -73,17 +73,20 @@ public class CreateFamilyServiceTest {
         
         MainFamilyMemberRepo mockedMainMemberFamilyRepo = mock(MainFamilyMemberRepo.class);
         MainFamilyMember mockedMainFamilyMember = mock(MainFamilyMember.class);
+        FindMainFamilyMemberService mockedFindMainFamilyMemberService = mock(FindMainFamilyMemberService.class);
+
+        mockedFindMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
 
         UUID mainMemberId = UUID.randomUUID();
 
         createMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
 
-        createMainFamilyMemberService.getValidateMainFamilyMemberService().setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
+        createMainFamilyMemberService.getValidateMainFamilyMemberService().setFindMainFamilyMemberService(mockedFindMainFamilyMemberService);
         
         createFamilyService.setCreateMainFamilyMemberService(createMainFamilyMemberService);
 
         when(mockedMainMemberFamilyRepo.save(any())).thenReturn(mockedMainFamilyMember);
-        when(mockedMainMemberFamilyRepo.existFamilyMemberByDocumentId(any())).thenReturn(false);
+        when(mockedMainMemberFamilyRepo.existsMainFamilyMemberByDocumentId(any())).thenReturn(false);
         when(mockedMainFamilyMember.getId()).thenReturn(mainMemberId);
 
         Set<DependentFamilyMember> dependentFamilyMembers = new HashSet<>();
@@ -95,8 +98,12 @@ public class CreateFamilyServiceTest {
     public void whenSaveFullFamilyWithAllMandatoryFieldsAndOneDependent_shouldReturnCreatedMainMemberUUID(){
 
         MainFamilyMemberRepo mockedMainMemberFamilyRepo = mock(MainFamilyMemberRepo.class);
-        DependentFamilyMemberRepo mockedDependentMemberFamilyRepo = mock(DependentFamilyMemberRepo.class);
         MainFamilyMember mockedMainFamilyMember = mock(MainFamilyMember.class);
+        FindMainFamilyMemberService mockedFindMainFamilyMemberService = mock(FindMainFamilyMemberService.class);
+
+        mockedFindMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
+        
+        DependentFamilyMemberRepo mockedDependentMemberFamilyRepo = mock(DependentFamilyMemberRepo.class);
         DependentFamilyMember mockedDependentFamilyMember = mock(DependentFamilyMember.class);
 
         UUID mainMemberId = UUID.randomUUID();
@@ -105,13 +112,13 @@ public class CreateFamilyServiceTest {
         createMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
         createDependentFamilyMemberService.setDependentFamilyMemberRepo(mockedDependentMemberFamilyRepo);
 
-        createMainFamilyMemberService.getValidateMainFamilyMemberService().setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
+        createMainFamilyMemberService.getValidateMainFamilyMemberService().setFindMainFamilyMemberService(mockedFindMainFamilyMemberService);
 
         createFamilyService.setCreateDependentFamilyMemberService(createDependentFamilyMemberService);
         createFamilyService.setCreateMainFamilyMemberService(createMainFamilyMemberService);
 
         when(mockedMainMemberFamilyRepo.save(any())).thenReturn(mockedMainFamilyMember);
-        when(mockedMainMemberFamilyRepo.existFamilyMemberByDocumentId(any())).thenReturn(false);
+        when(mockedMainMemberFamilyRepo.existsMainFamilyMemberByDocumentId(any())).thenReturn(false);
         when(mockedDependentMemberFamilyRepo.save(any())).thenReturn(mockedDependentFamilyMember);
 
         when(mockedMainFamilyMember.getId()).thenReturn(mainMemberId);
