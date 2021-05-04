@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.cuidar.model.enums.FamilyMemberCivilStatus;
 import com.cuidar.model.enums.FamilyMemberGender;
+import com.cuidar.model.enums.FamilyMemberGeneralStatus;
 import com.cuidar.model.enums.FamilyMemberHousingType;
 import com.cuidar.model.enums.FamilyMemberNoYesFlag;
 import com.cuidar.model.enums.FamilyMemberSchooling;
@@ -48,6 +49,9 @@ public class MainFamilyMember extends FamilyMember {
     private FamilyMemberCivilStatus civilStatus;
     @Column(nullable = false)
     private FamilyMemberSchooling schooling;
+    
+    @Column(nullable = false)
+    private FamilyMemberGeneralStatus generalStatus = FamilyMemberGeneralStatus.PendingApproval;
 
     // not-mandatory
     private String addressStreetComplement;

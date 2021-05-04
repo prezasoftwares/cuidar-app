@@ -28,7 +28,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mainFamilyMember\": {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\"\r\n    },\r\n    \"dependentMembers\": [\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        },\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Male\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"mainFamilyMember\": {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\"\r\n    },\r\n    \"dependentMembers\": [\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Female\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -148,6 +148,108 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "FamilyMembers-Search-All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/familymembers/search?page=0&size=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"familymembers",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FamilyMembers-Search-ByName",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/familymembers/search?page=0&size=10&fullName=batz",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"familymembers",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "fullName",
+									"value": "batz"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get OAuth JWT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"grant_type\": \"client_credentials\",\r\n    \"username\": \"moacir@cuidar-api.com.br\",\r\n    \"password\": \"teste@123\",\r\n    \"client_id\": \"84baTOEjoyoAhiGqBP6b1Hht8rzexJrO\",\r\n    \"client_secret\": \"9vXiMh35sprjM43CyBuHzjO3L6CUixg6ib8PbQvZHLzacmWEf-0LszvpB_fk2iiT\",\r\n    \"audience\": \"https://www.cuidar-api.app/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://cuidar.us.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"cuidar",
+						"us",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

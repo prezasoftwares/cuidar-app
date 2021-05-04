@@ -8,10 +8,12 @@ import javax.validation.constraints.NotNull;
 import com.cuidar.model.MainFamilyMember;
 import com.cuidar.model.enums.FamilyMemberCivilStatus;
 import com.cuidar.model.enums.FamilyMemberGender;
+import com.cuidar.model.enums.FamilyMemberGeneralStatus;
 import com.cuidar.model.enums.FamilyMemberHousingType;
 import com.cuidar.model.enums.FamilyMemberNoYesFlag;
 import com.cuidar.model.enums.FamilyMemberSchooling;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,4 +60,7 @@ public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFami
     private String religionNotes;
     private FamilyMemberNoYesFlag baptizedChildren;
     private String socialAssistenceNeedsNotes;
+    private Date systemRegistrationDate;
+
+    private @Setter(value = AccessLevel.PRIVATE) FamilyMemberGeneralStatus generalStatus;
 }
