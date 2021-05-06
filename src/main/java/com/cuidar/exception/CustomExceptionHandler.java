@@ -4,12 +4,15 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import io.jsonwebtoken.SignatureException;
 
 @ControllerAdvice
 @SuppressWarnings({"all"})
@@ -53,4 +56,36 @@ public class CustomExceptionHandler {
         return response;
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public APIExceptionResponse onBadCredentialsException(BadCredentialsException badCredentialsException) {
+        APIExceptionResponse response = new APIExceptionResponse("Credenciais inválidas");
+    
+        response.getErrorList().add(new ErrorDetail(badCredentialsException.getMessage(), ""));
+    
+        return response;
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public APIExceptionResponse onSignatureException(SignatureException signatureException) {
+        APIExceptionResponse response = new APIExceptionResponse("Token JWT inválido");
+    
+        response.getErrorList().add(new ErrorDetail(signatureException.getMessage(), signatureException.getLocalizedMessage()));
+    
+        return response;
+    }
+    
+    @ExceptionHandler(UserEmailAlreadyRegisteredException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public APIExceptionResponse onUserEmailAlreadyRegisteredException(UserEmailAlreadyRegisteredException userEmailAlreadyRegisteredException) {
+        APIExceptionResponse response = new APIExceptionResponse("Email já registrado");
+    
+        response.getErrorList().add(new ErrorDetail(userEmailAlreadyRegisteredException.getMessage(), userEmailAlreadyRegisteredException.getLocalizedMessage()));
+    
+        return response;
+    }
 }
