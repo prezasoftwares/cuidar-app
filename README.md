@@ -19,7 +19,11 @@ docker-compose up -d
 ## Variáveis de ambiente
 ```
 #Defina no sistema as variáveis de ambiente:
+-user var
 spring.profiles.active = dev
+
+-system var
+cuidarUserRegisterSecret = $secret$
 ```
 
 ## Executar a aplicação

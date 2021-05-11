@@ -24,7 +24,9 @@ public class CustomUserDetailsService implements UserDetailsService {
             .filter(x -> x.getUserName().equalsIgnoreCase(username))
             .findFirst();
 
-        if (user.isEmpty()) return null;
+        if (user.isEmpty()){
+            throw new UsernameNotFoundException("Usuário não encontrado");
+        } 
 
         return new org.springframework.security.core.userdetails.User(user.get().getUserName(), user.get().getPassword(), new ArrayList<>());
     }

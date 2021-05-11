@@ -31,4 +31,8 @@ public class UserRegistrationDTO extends DTOMapper<UserRegistrationDTO, User>{
     @NotNull
     @NotEmpty
     private String email;
+
+    @NotNull
+    @NotEmpty
+    private String userRegisterSecret;
 }

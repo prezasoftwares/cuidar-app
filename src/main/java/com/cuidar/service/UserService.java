@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.cuidar.exception.UserEmailAlreadyRegisteredException;
+import com.cuidar.exception.UserRegisterSecretException;
 import com.cuidar.model.User;
 import com.cuidar.repository.UserRepo;
 
@@ -24,7 +25,18 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public UUID registerNewUserAccount(User user) throws UserEmailAlreadyRegisteredException {
+    public UUID registerNewUserAccount(User user, String userRegisterSecret) throws UserEmailAlreadyRegisteredException, UserRegisterSecretException {
+        
+        String userRegisterSecretValue = System.getenv("cuidarUserRegisterSecret");
+
+        if (userRegisterSecretValue == null){
+            throw new UserRegisterSecretException("Chave secreta não configurada no ambiente");
+        }else if (userRegisterSecret.equals("")){
+            throw new UserRegisterSecretException("Chave secreta para registro de usuários não foi informada");
+        }else if (!userRegisterSecret.equals(userRegisterSecretValue)){
+            throw new UserRegisterSecretException("Chave secreta incorreta");
+        }
+        
         if (emailExists(user.getEmail())) {
             throw new UserEmailAlreadyRegisteredException("Já existe uma conta registrada com o e-mail: " + user.getEmail());
         }

@@ -67,7 +67,7 @@ public class AuthController {
 
         User newUser = userRegistrationDTO.convertToEntity(modelMapper);
 
-        UUID generatedUserId = userService.registerNewUserAccount(newUser);
+        UUID generatedUserId = userService.registerNewUserAccount(newUser, userRegistrationDTO.getUserRegisterSecret());
 
         return new ResponseEntity<>(generatedUserId, HttpStatus.OK);
     }
