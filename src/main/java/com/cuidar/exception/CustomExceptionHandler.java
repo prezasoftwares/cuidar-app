@@ -111,4 +111,15 @@ public class CustomExceptionHandler {
     
         return response;
     }
+
+    @ExceptionHandler(UserAlreadyRegisteredException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public APIExceptionResponse onUserAlreadyRegisteredException(UserAlreadyRegisteredException userAlreadyRegisteredException) {
+        APIExceptionResponse response = new APIExceptionResponse("Usuário já registrado");
+    
+        response.getErrorList().add(new ErrorDetail(userAlreadyRegisteredException.getMessage(), userAlreadyRegisteredException.getLocalizedMessage()));
+    
+        return response;
+    }
 }
