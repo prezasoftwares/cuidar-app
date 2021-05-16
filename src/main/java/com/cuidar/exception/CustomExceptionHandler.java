@@ -40,7 +40,7 @@ public class CustomExceptionHandler {
         
         APIExceptionResponse response = new APIExceptionResponse("Recurso não encontrado");
         
-        response.getErrorList().add(new ErrorDetail(resourceNotFoundException.getResourceName(), resourceNotFoundException.getClass().toString()));
+        response.getErrorList().add(new ErrorDetail(resourceNotFoundException.getMessage(), resourceNotFoundException.getResourceName()));
 
         return response;
     }

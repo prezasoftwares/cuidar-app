@@ -2,6 +2,7 @@ package com.cuidar.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -74,12 +75,14 @@ public class CreateFamilyServiceTest {
         MainFamilyMemberRepo mockedMainMemberFamilyRepo = mock(MainFamilyMemberRepo.class);
         MainFamilyMember mockedMainFamilyMember = mock(MainFamilyMember.class);
         FindMainFamilyMemberService mockedFindMainFamilyMemberService = mock(FindMainFamilyMemberService.class);
+        FamilyStatusUpdateService mockedFamilyStatusUpdateService = mock(FamilyStatusUpdateService.class);
 
         mockedFindMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
 
         UUID mainMemberId = UUID.randomUUID();
 
         createMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
+        createMainFamilyMemberService.setFamilyStatusUpdateService(mockedFamilyStatusUpdateService);
 
         createMainFamilyMemberService.getValidateMainFamilyMemberService().setFindMainFamilyMemberService(mockedFindMainFamilyMemberService);
         
@@ -88,6 +91,7 @@ public class CreateFamilyServiceTest {
         when(mockedMainMemberFamilyRepo.save(any())).thenReturn(mockedMainFamilyMember);
         when(mockedMainMemberFamilyRepo.existsMainFamilyMemberByDocumentId(any())).thenReturn(false);
         when(mockedMainFamilyMember.getId()).thenReturn(mainMemberId);
+        when(mockedFamilyStatusUpdateService.registerStatusUpdate(any(), anyString())).thenReturn(UUID.randomUUID());
 
         Set<DependentFamilyMember> dependentFamilyMembers = new HashSet<>();
 
@@ -100,8 +104,10 @@ public class CreateFamilyServiceTest {
         MainFamilyMemberRepo mockedMainMemberFamilyRepo = mock(MainFamilyMemberRepo.class);
         MainFamilyMember mockedMainFamilyMember = mock(MainFamilyMember.class);
         FindMainFamilyMemberService mockedFindMainFamilyMemberService = mock(FindMainFamilyMemberService.class);
+        FamilyStatusUpdateService mockedFamilyStatusUpdateService = mock(FamilyStatusUpdateService.class);
 
         mockedFindMainFamilyMemberService.setMainFamilyMemberRepo(mockedMainMemberFamilyRepo);
+        createMainFamilyMemberService.setFamilyStatusUpdateService(mockedFamilyStatusUpdateService);
         
         DependentFamilyMemberRepo mockedDependentMemberFamilyRepo = mock(DependentFamilyMemberRepo.class);
         DependentFamilyMember mockedDependentFamilyMember = mock(DependentFamilyMember.class);
@@ -120,6 +126,7 @@ public class CreateFamilyServiceTest {
         when(mockedMainMemberFamilyRepo.save(any())).thenReturn(mockedMainFamilyMember);
         when(mockedMainMemberFamilyRepo.existsMainFamilyMemberByDocumentId(any())).thenReturn(false);
         when(mockedDependentMemberFamilyRepo.save(any())).thenReturn(mockedDependentFamilyMember);
+        when(mockedFamilyStatusUpdateService.registerStatusUpdate(any(), anyString())).thenReturn(UUID.randomUUID());
 
         when(mockedMainFamilyMember.getId()).thenReturn(mainMemberId);
         when(mockedDependentFamilyMember.getId()).thenReturn(dependentMemberId);

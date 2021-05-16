@@ -1,6 +1,6 @@
 package com.cuidar.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -64,13 +64,24 @@ public class MainFamilyMember extends FamilyMember {
     private FamilyMemberNoYesFlag baptizedChildren;
     private String socialAssistenceNeedsNotes;
 
+    private Date assistenceDueDate;
+
     // Dependents
-    @OneToMany(mappedBy = "mainFamilyMember", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "mainFamilyMember", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<DependentFamilyMember> dependents = new HashSet<>();
 
     @JsonIgnore
     public Set<DependentFamilyMember> getDependents() {
         return dependents;
+    }
+
+    // Status update history
+    @OneToMany(mappedBy = "mainFamilyMember", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<FamilyStatusUpdateRecord> statusUpdateRecords = new HashSet<>();
+
+    @JsonIgnore
+    public Set<FamilyStatusUpdateRecord> getStatusUpdateRecords() {
+        return statusUpdateRecords;
     }
 
     public MainFamilyMember(String name, Date birthDate, FamilyMemberGender gender, String documentId,

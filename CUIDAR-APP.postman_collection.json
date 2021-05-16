@@ -28,7 +28,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mainFamilyMember\": {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\"\r\n    },\r\n    \"dependentMembers\": [\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Female\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"mainFamilyMember\": {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\",\r\n        \"generalStatus\": \"Promoted\"\r\n    },\r\n    \"dependentMembers\": [\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Female\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -81,18 +81,16 @@
 			]
 		},
 		{
-			"name": "MainMember",
+			"name": "Syndication",
 			"item": [
 				{
-					"name": "FamilyMembers-Main-post",
+					"name": "FamilySindicance-Approve",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"responseBody = responseBody.replace('\"', '')\r",
-									"responseBody = responseBody.replace('\"', '')\r",
-									"postman.setEnvironmentVariable(\"mainFamilyMemberCreatedUUID\", responseBody);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -117,20 +115,75 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomNameSuffix}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\"\r\n    }"
+							"raw": "{\r\n    \"syndicationNotes\": \"O cidadão está aprovado pois está numa situação desesperadora!\"\r\n}"
 						},
 						"url": {
-							"raw": "{{url}}/mainfamilymembers",
+							"raw": "{{url}}/syndication/approve/{{familyMemberCreatedUUID}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"mainfamilymembers"
+								"syndication",
+								"approve",
+								"{{familyMemberCreatedUUID}}"
 							]
 						}
 					},
 					"response": []
 				},
+				{
+					"name": "FamilySindicance-Decline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"syndicationNotes\": \"A família tem condições de se manter, não há necessidade de assistência social\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/syndication/reprove/{{familyMemberCreatedUUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"syndication",
+								"reprove",
+								"{{familyMemberCreatedUUID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MainMember",
+			"item": [
 				{
 					"name": "FamilyMembers-Main-getById",
 					"request": {
@@ -146,13 +199,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/mainfamilymembers/{{mainFamilyMemberCreatedUUID}}",
+							"raw": "{{url}}/mainfamilymembers/{{familyMemberCreatedUUID}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"mainfamilymembers",
-								"{{mainFamilyMemberCreatedUUID}}"
+								"{{familyMemberCreatedUUID}}"
 							]
 						}
 					},
@@ -288,7 +341,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\":\"{{$randomFullName}}\",\r\n    \"userName\":\"cuidar\",\r\n    \"password\":\"cuidar\",\r\n    \"email\":\"cuidar@cuidar.com\",\r\n    \"userRegisterSecret\": \"cuidarsecret\"\r\n}",
+							"raw": "{\r\n    \"fullName\":\"{{$randomFullName}}\",\r\n    \"userName\":\"cuidar-test2\",\r\n    \"password\":\"cuidar\",\r\n    \"email\":\"{{$randomEmail}}\",\r\n    \"userRegisterSecret\": \"{{registerSecret}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -13,7 +13,6 @@ import com.cuidar.model.enums.FamilyMemberHousingType;
 import com.cuidar.model.enums.FamilyMemberNoYesFlag;
 import com.cuidar.model.enums.FamilyMemberSchooling;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -61,6 +60,6 @@ public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFami
     private FamilyMemberNoYesFlag baptizedChildren;
     private String socialAssistenceNeedsNotes;
     private Date systemRegistrationDate;
-
-    private @Setter(value = AccessLevel.PRIVATE) FamilyMemberGeneralStatus generalStatus;
+    
+    private FamilyMemberGeneralStatus generalStatus;
 }
