@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 
@@ -68,17 +69,6 @@ public class CustomExceptionHandler {
         return response;
     }
 
-    @ExceptionHandler(SignatureException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public APIExceptionResponse onSignatureException(SignatureException signatureException) {
-        APIExceptionResponse response = new APIExceptionResponse("Token JWT inválido");
-    
-        response.getErrorList().add(new ErrorDetail(signatureException.getMessage(), signatureException.getLocalizedMessage()));
-    
-        return response;
-    }
-    
     @ExceptionHandler(UserEmailAlreadyRegisteredException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -97,17 +87,6 @@ public class CustomExceptionHandler {
         APIExceptionResponse response = new APIExceptionResponse("Erro na chave secreta de registro");
         
         response.getErrorList().add(new ErrorDetail(userRegisterSecretException.getMessage(), userRegisterSecretException.getLocalizedMessage()));
-    
-        return response;
-    }
-
-    @ExceptionHandler(MalformedJwtException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public APIExceptionResponse onMalformedJwtException(MalformedJwtException malformedJwtException){
-        APIExceptionResponse response = new APIExceptionResponse("Erro encontrado no token JWT");
-        
-        response.getErrorList().add(new ErrorDetail(malformedJwtException.getMessage(), malformedJwtException.getLocalizedMessage()));
     
         return response;
     }
