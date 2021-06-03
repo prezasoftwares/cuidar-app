@@ -33,7 +33,7 @@ public class FamilyMember extends BaseModel {
     @Column(nullable = false)
     private String occupation;
 
-    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
+    @Column(name ="createdDateTime", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     private Date systemRegistrationDate;
 
     public FamilyMember(String fullName, Date birthDate, FamilyMemberGender gender) {

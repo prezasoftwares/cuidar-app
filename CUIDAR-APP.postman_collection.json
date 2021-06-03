@@ -110,7 +110,8 @@
 							{
 								"key": "Authorization",
 								"value": "JWT {{apiJWT}}",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -158,7 +159,8 @@
 							{
 								"key": "Authorization",
 								"value": "JWT {{apiJWT}}",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -253,7 +255,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/familymembers/search?page=0&size=10&fullName=hick",
+							"raw": "{{url}}/familymembers/search?page=0&size=10&fullName=ly",
 							"host": [
 								"{{url}}"
 							],
@@ -272,8 +274,112 @@
 								},
 								{
 									"key": "fullName",
-									"value": "hick"
+									"value": "ly"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ActionPlan",
+			"item": [
+				{
+					"name": "ActionPlan-Creation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"{{$randomCatchPhrase}}\",\r\n    \"dueDate\": \"2021-10-10T00:00:00.000+00:00\",\r\n    \"referencedFamilyMemberId\": \"{{familyMemberCreatedUUID}}\",\r\n    \"isAssistentTask\": \"Yes\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/familyactionplan/{{familyMemberCreatedUUID}}/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"familyactionplan",
+								"{{familyMemberCreatedUUID}}",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActionPlan-Get items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/familyactionplan/{{familyMemberCreatedUUID}}/actions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"familyactionplan",
+								"{{familyMemberCreatedUUID}}",
+								"actions"
 							]
 						}
 					},
@@ -341,7 +447,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\":\"{{$randomFullName}}\",\r\n    \"userName\":\"cuidar-test2\",\r\n    \"password\":\"cuidar\",\r\n    \"email\":\"{{$randomEmail}}\",\r\n    \"userRegisterSecret\": \"{{registerSecret}}\"\r\n}",
+							"raw": "{\r\n    \"fullName\":\"{{$randomFullName}}\",\r\n    \"userName\":\"cuidar\",\r\n    \"password\":\"cuidar\",\r\n    \"email\":\"{{$randomEmail}}\",\r\n    \"userRegisterSecret\": \"{{registerSecret}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -17,6 +17,8 @@ import lombok.Setter;
 @Setter
 public class DependentFamilyMemberDTO extends DTOMapper<DependentFamilyMemberDTO, DependentFamilyMember> {
     
+    private UUID id;
+
     @NotBlank(message = "Nome completo deve ser preenchido")
     private String fullName;
     @NotNull(message = "Data de nascimento deve ser preenchida")

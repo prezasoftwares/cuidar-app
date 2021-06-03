@@ -1,6 +1,7 @@
 package com.cuidar.dto;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,6 +24,8 @@ public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFami
     public MainFamilyMemberDTO() {
         super(MainFamilyMemberDTO.class, MainFamilyMember.class);
     }
+
+    private UUID id;
 
     @NotBlank(message = "Nome completo deve ser preenchido")
     private String fullName;
