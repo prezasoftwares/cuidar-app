@@ -40,4 +40,18 @@ public class FamilySyndicationController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/promote/{id}")
+    public ResponseEntity<Object> promote(@PathVariable(name = "id") UUID mainFamilyMemberId, @Valid @RequestBody FamilySyndicationDTO familySyndicationDTO){
+        this.syndicationRegisterService.Promote(mainFamilyMemberId, familySyndicationDTO.getSyndicationNotes());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/suspend/{id}")
+    public ResponseEntity<Object> suspend(@PathVariable(name = "id") UUID mainFamilyMemberId, @Valid @RequestBody FamilySyndicationDTO familySyndicationDTO){
+        this.syndicationRegisterService.Suspend(mainFamilyMemberId, familySyndicationDTO.getSyndicationNotes());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

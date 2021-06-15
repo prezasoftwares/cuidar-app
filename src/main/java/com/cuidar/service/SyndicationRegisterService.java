@@ -56,4 +56,28 @@ public class SyndicationRegisterService {
 
         this.familyStatusUpdateService.registerStatusUpdate(foundMainFamilyMember, syndicationNotes);
     }
+
+    public void Promote(UUID mainFamilyMemberId, String syndicationNotes) {
+        MainFamilyMember foundMainFamilyMember = findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId);
+
+        familyStatusUpdateService.validateStatusTransition(foundMainFamilyMember.getGeneralStatus(), FamilyMemberGeneralStatus.Promoted);
+
+        foundMainFamilyMember.setGeneralStatus(FamilyMemberGeneralStatus.Promoted);
+    
+        mainFamilyMemberRepo.save(foundMainFamilyMember);
+
+        this.familyStatusUpdateService.registerStatusUpdate(foundMainFamilyMember, syndicationNotes);
+    }
+
+    public void Suspend(UUID mainFamilyMemberId, String syndicationNotes) {
+        MainFamilyMember foundMainFamilyMember = findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId);
+
+        familyStatusUpdateService.validateStatusTransition(foundMainFamilyMember.getGeneralStatus(), FamilyMemberGeneralStatus.Suspended);
+
+        foundMainFamilyMember.setGeneralStatus(FamilyMemberGeneralStatus.Suspended);
+    
+        mainFamilyMemberRepo.save(foundMainFamilyMember);
+
+        this.familyStatusUpdateService.registerStatusUpdate(foundMainFamilyMember, syndicationNotes);
+    }
 }
