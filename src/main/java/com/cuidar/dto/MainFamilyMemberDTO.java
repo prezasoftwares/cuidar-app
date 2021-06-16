@@ -63,6 +63,7 @@ public class MainFamilyMemberDTO extends DTOMapper<MainFamilyMemberDTO, MainFami
     private FamilyMemberNoYesFlag baptizedChildren;
     private String socialAssistenceNeedsNotes;
     private Date systemRegistrationDate;
+    private Date assistenceDueDate;
     
     private FamilyMemberGeneralStatus generalStatus;
 }
