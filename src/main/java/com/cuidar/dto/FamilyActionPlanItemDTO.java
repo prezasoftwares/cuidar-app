@@ -20,6 +20,7 @@ public class FamilyActionPlanItemDTO extends DTOMapper<FamilyActionPlanItemDTO, 
     private FamilyMemberNoYesFlag isAssistentTask;
     private FamilyMemberNoYesFlag done;
     private Date systemRegistrationDate;
+    private UUID id;
 
     public FamilyActionPlanItemDTO() {
         super(FamilyActionPlanItemDTO.class, FamilyActionPlanItem.class);

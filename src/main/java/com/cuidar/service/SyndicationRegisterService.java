@@ -57,6 +57,7 @@ public class SyndicationRegisterService {
         this.familyStatusUpdateService.registerStatusUpdate(foundMainFamilyMember, syndicationNotes);
     }
 
+    @Transactional
     public void Promote(UUID mainFamilyMemberId, String syndicationNotes) {
         MainFamilyMember foundMainFamilyMember = findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId);
 
@@ -69,6 +70,7 @@ public class SyndicationRegisterService {
         this.familyStatusUpdateService.registerStatusUpdate(foundMainFamilyMember, syndicationNotes);
     }
 
+    @Transactional
     public void Suspend(UUID mainFamilyMemberId, String syndicationNotes) {
         MainFamilyMember foundMainFamilyMember = findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId);
 

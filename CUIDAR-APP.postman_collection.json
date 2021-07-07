@@ -28,7 +28,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mainFamilyMember\": {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\",\r\n        \"generalStatus\": \"Promoted\"\r\n    },\r\n    \"dependentMembers\": [\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Female\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"mainFamilyMember\": {\r\n        \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n        \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n        \"gender\": \"Male\",\r\n        \"occupation\": \"{{$randomJobTitle}}\",\r\n        \"documentId\": \"{{$randomIP}}\",\r\n        \"addressPostalCode\": \"11122-101\",\r\n        \"addressStreetName\": \"{{$randomStreetName}}\",\r\n        \"addressStreetNumber\": \"{{$randomInt}}\",\r\n        \"addressCity\": \"{{$randomCity}}\",\r\n        \"addressState\": \"{{$randomCity}}\",\r\n        \"civilStatus\": \"Single\",\r\n        \"schooling\": \"Basic\",\r\n        \"housingType\": \"Other\",\r\n        \"housingTypeNotes\": \"{{$randomWords}}\"\r\n    },\r\n    \"dependentMembers\": [\r\n        {\r\n            \"linkTypeToMainMember\": \"Mother\",\r\n            \"fullName\": \"{{$randomNamePrefix}} {{$randomFirstName}} {{$randomLastName}}\",\r\n            \"birthDate\": \"1970-03-10T00:00:00.000+00:00\",\r\n            \"gender\": \"Female\",\r\n            \"occupation\": \"{{$randomJobTitle}}\",\r\n            \"documentId\": \"{{$randomIP}}\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -133,7 +133,7 @@
 					"response": []
 				},
 				{
-					"name": "FamilySindicance-Decline",
+					"name": "FamilySindicance-Reprove",
 					"event": [
 						{
 							"listen": "test",
@@ -176,6 +176,258 @@
 								"syndication",
 								"reprove",
 								"{{familyMemberCreatedUUID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FamilySindicance-Promote",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"syndicationNotes\": \"A família tem condições de se manter, não há necessidade de assistência social\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/syndication/promote/{{familyMemberCreatedUUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"syndication",
+								"promote",
+								"{{familyMemberCreatedUUID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FamilySindicance-Suspend",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"syndicationNotes\": \"A família tem condições de se manter, não há necessidade de assistência social\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/syndication/suspend/{{familyMemberCreatedUUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"syndication",
+								"suspend",
+								"{{familyMemberCreatedUUID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "Attendance-Get Template",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/attendance/{{familyMemberCreatedUUID}}/template",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"attendance",
+								"{{familyMemberCreatedUUID}}",
+								"template"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance-Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"attendanceDateTime\": \"2021-06-15T14:00:00.000-03:00\",\r\n    \"notes\": \"{{$randomLoremWords}}\",\r\n    \"linkedFamilyMembers\": [\r\n        {\r\n            \"familyMemberId\": \"{{familyMemberCreatedUUID}}\"\r\n        }\r\n    ],\r\n    \"linkedActionPlanItems\": [\r\n        {\r\n            \"actionPlanItemId\": \"cf1b582c-5abf-4017-93ac-d4ec7dacd753\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/attendance/{{familyMemberCreatedUUID}}/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"attendance",
+								"{{familyMemberCreatedUUID}}",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance-Get History",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/attendance/{{familyMemberCreatedUUID}}/history",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"attendance",
+								"{{familyMemberCreatedUUID}}",
+								"history"
 							]
 						}
 					},
@@ -319,7 +571,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"{{$randomCatchPhrase}}\",\r\n    \"dueDate\": \"2021-10-10T00:00:00.000+00:00\",\r\n    \"referencedFamilyMemberId\": \"{{familyMemberCreatedUUID}}\",\r\n    \"isAssistentTask\": \"Yes\"\r\n}"
+							"raw": "{\r\n    \"description\": \"{{$randomCatchPhrase}}\",\r\n    \"dueDate\": \"2021-10-10T00:00:00.000+00:00\",\r\n    \"referencedFamilyMemberId\": \"{{familyMemberCreatedUUID}}\",\r\n    \"isAssistentTask\": \"No\"\r\n}"
 						},
 						"url": {
 							"raw": "{{url}}/familyactionplan/{{familyMemberCreatedUUID}}/create",
@@ -330,6 +582,57 @@
 								"familyactionplan",
 								"{{familyMemberCreatedUUID}}",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActionPlan-UpdateStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/familyactionplan/{{familyMemberCreatedUUID}}/update/bb86cb9b-86bd-48ed-9c8c-c5afae269063/Yes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"familyactionplan",
+								"{{familyMemberCreatedUUID}}",
+								"update",
+								"bb86cb9b-86bd-48ed-9c8c-c5afae269063",
+								"Yes"
 							]
 						}
 					},

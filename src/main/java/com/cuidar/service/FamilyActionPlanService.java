@@ -2,10 +2,12 @@ package com.cuidar.service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.cuidar.dto.FamilyActionPlanCreationDTO;
 import com.cuidar.exception.DomainValidationException;
+import com.cuidar.exception.ResourceNotFoundException;
 import com.cuidar.model.DependentFamilyMember;
 import com.cuidar.model.FamilyActionPlanItem;
 import com.cuidar.model.MainFamilyMember;
@@ -30,6 +32,10 @@ public class FamilyActionPlanService {
 
     public Iterable<FamilyActionPlanItem> findAllActionPlanItems(MainFamilyMember mainFamilyMember) {
         return this.familyActionPlanItemRepo.findBymainFamilyMember(mainFamilyMember);
+    }
+
+    public Iterable<FamilyActionPlanItem> findAllUndoneActionPlanItems(MainFamilyMember mainFamilyMember){
+        return this.familyActionPlanItemRepo.findByMainFamilyMemberAndDone(mainFamilyMember, FamilyMemberNoYesFlag.No);
     }
     
     public void createItemInActionPlan(UUID mainFamilyMemberId, FamilyActionPlanCreationDTO familyActionPlanItemDTO){
@@ -59,6 +65,35 @@ public class FamilyActionPlanService {
         this.validateActionPlanItem(mainFamilyMember, dependentFamilyMember, familyActionPlanItem);
 
         this.familyActionPlanItemRepo.save(familyActionPlanItem);
+    }
+
+    public void updateActionPlanItem(UUID mainFamilyMemberId, UUID actionPlanItemId, FamilyMemberNoYesFlag done){
+
+        FamilyActionPlanItem actionPlanItem = this.findFamilyActionPlanItem(actionPlanItemId);
+
+        if (mainFamilyMemberId.toString().equals(actionPlanItem.getMainFamilyMemberId().toString())){
+            actionPlanItem.setDone(done);
+            this.familyActionPlanItemRepo.save(actionPlanItem);
+        }
+        else
+        {
+            DomainValidationException domainValidationException = new DomainValidationException("Dados inválidos");
+            domainValidationException.addMessage("Membro principal inválido para o item do plano de ação informado");
+            throw domainValidationException;
+        }
+    }
+
+    public FamilyActionPlanItem findFamilyActionPlanItem(UUID actionPlanItemId){
+        Optional<FamilyActionPlanItem> foundActionPlan = this.familyActionPlanItemRepo.findById(actionPlanItemId);
+
+        if (!foundActionPlan.isPresent())
+        {
+            throw new ResourceNotFoundException("Item de plano de ação não encontrado", actionPlanItemId.toString());
+        }
+
+        FamilyActionPlanItem actionPlanItem = foundActionPlan.get();
+
+        return actionPlanItem;
     }
 
     private void validateActionPlanItem(MainFamilyMember mainFamilyMember, DependentFamilyMember dependentFamilyMember, FamilyActionPlanItem familyActionPlanItem){

@@ -9,6 +9,7 @@ import com.cuidar.dto.FamilyActionPlanItemDTO;
 import com.cuidar.dto.FamilyActionPlanItemsListDTO;
 import com.cuidar.model.FamilyActionPlanItem;
 import com.cuidar.model.MainFamilyMember;
+import com.cuidar.model.enums.FamilyMemberNoYesFlag;
 import com.cuidar.service.FamilyActionPlanService;
 import com.cuidar.service.FindMainFamilyMemberService;
 
@@ -59,5 +60,13 @@ public class FamilyActionPlanController {
             actionPlanItemsListDTO.setActionItemsCount(actionPlanItemsListDTO.getActionItemsCount() + 1);
         }
         return new ResponseEntity<>(actionPlanItemsListDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/update/{itemId}/{done}")
+    public ResponseEntity<Object> updateActionPlanItem(@PathVariable(name = "id") UUID mainFamilyMemberId, @PathVariable(name="itemId") UUID actionPlanItemId, @PathVariable(name="done") FamilyMemberNoYesFlag done){
+        
+        this.familyActionPlanService.updateActionPlanItem(mainFamilyMemberId, actionPlanItemId, done);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
