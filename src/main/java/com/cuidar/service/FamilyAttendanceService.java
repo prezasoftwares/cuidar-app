@@ -8,11 +8,13 @@ import java.util.UUID;
 import com.cuidar.dto.AttendanceRegisterTemplateInfoActioPlanItemDTO;
 import com.cuidar.dto.AttendanceRegisterTemplateInfoDTO;
 import com.cuidar.dto.AttendanceRegisterTemplateInfoFamilyMemberDTO;
+import com.cuidar.exception.DomainValidationException;
 import com.cuidar.model.DependentFamilyMember;
 import com.cuidar.model.FamilyActionPlanItem;
 import com.cuidar.model.FamilyAttendanceRecord;
 import com.cuidar.model.FamilyAttendanceRecordLinkedMember;
 import com.cuidar.model.MainFamilyMember;
+import com.cuidar.model.enums.FamilyMemberGeneralStatus;
 import com.cuidar.model.enums.FamilyMemberLinkType;
 import com.cuidar.model.enums.FamilyMemberNoYesFlag;
 import com.cuidar.repository.FamilyAttendanceRecordLinkedMemberRepo;
@@ -47,6 +49,8 @@ public class FamilyAttendanceService {
     public void registerAttendanceRecord(UUID mainFamilyMemberId, FamilyAttendanceRecord familyAttendanceRecord, HashSet<UUID> doneActionPlanItemIds, HashSet<UUID> linkedFamilyMemberIds){
         
         MainFamilyMember foundMainFamilyMember = findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId);
+
+        this.validateAttendanceReport(foundMainFamilyMember);
 
         familyAttendanceRecord.setMainFamilyMember(foundMainFamilyMember);        
 
@@ -129,5 +133,15 @@ public class FamilyAttendanceService {
         Page<FamilyAttendanceRecord> pageAttendanceReport = this.familyAttendanceRecordRepo.findBymainFamilyMember(foundMainFamilyMember, paging);
 
         return pageAttendanceReport;
+    }
+
+    private void validateAttendanceReport(MainFamilyMember mainFamilyMember)
+    {
+        if (mainFamilyMember.getGeneralStatus() != FamilyMemberGeneralStatus.Active)
+        {
+            DomainValidationException domainValidationException = new DomainValidationException("Status inválido");
+            domainValidationException.addMessage("Status da família deve ser 'Ativo' para registros de atendimento");
+            throw domainValidationException;
+        }
     }
 }
