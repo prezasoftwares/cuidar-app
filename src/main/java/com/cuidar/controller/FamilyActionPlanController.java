@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import com.cuidar.dto.FamilyActionPlanCreationDTO;
 import com.cuidar.dto.FamilyActionPlanItemDTO;
 import com.cuidar.dto.FamilyActionPlanItemsListDTO;
+import com.cuidar.dto.FamilyActionPlanSummaryDTO;
 import com.cuidar.model.FamilyActionPlanItem;
 import com.cuidar.model.MainFamilyMember;
 import com.cuidar.model.enums.FamilyMemberNoYesFlag;
@@ -68,5 +69,23 @@ public class FamilyActionPlanController {
         this.familyActionPlanService.updateActionPlanItem(mainFamilyMemberId, actionPlanItemId, done);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FamilyActionPlanSummaryDTO> getGeneralStatus(@PathVariable(name = "id") UUID mainFamilyMemberId){
+
+        FamilyActionPlanSummaryDTO actionPlanItemsSummaryDTO = new FamilyActionPlanSummaryDTO(mainFamilyMemberId);
+        FamilyActionPlanItemDTO familyActionPlamItemDTO = new FamilyActionPlanItemDTO();
+
+        MainFamilyMember foundMainFamilyMember = this.findMainFamilyMemberService.findMainFamilyMemberById(mainFamilyMemberId);
+        Iterable<FamilyActionPlanItem> foundActionPlanItems = this.familyActionPlanService.findAllActionPlanItems(foundMainFamilyMember);
+
+        for (FamilyActionPlanItem familyActionPlanItem : foundActionPlanItems) {
+            actionPlanItemsSummaryDTO.getActionList().add(familyActionPlamItemDTO.convertToDto(modelMapper, familyActionPlanItem));
+            actionPlanItemsSummaryDTO.setActionItemsCount(actionPlanItemsSummaryDTO.getActionItemsCount() + 1);
+            actionPlanItemsSummaryDTO.setConcludedActions(actionPlanItemsSummaryDTO.getConcludedActions() + (familyActionPlanItem.getDone() == FamilyMemberNoYesFlag.Yes ? 1 : 0));
+        }
+
+        return new ResponseEntity<>(actionPlanItemsSummaryDTO, HttpStatus.OK);
     }
 }
