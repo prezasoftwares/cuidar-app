@@ -1,5 +1,6 @@
 package com.cuidar.controller;
 
+import com.cuidar.dto.PlatformStatsAttendancesDTO;
 import com.cuidar.dto.PlatformStatsFamiliesDTO;
 import com.cuidar.service.GetPlatformStatsService;
 
@@ -28,8 +29,10 @@ public class PlatformStats {
     }
 
     @GetMapping("/attendances")
-    public ResponseEntity<Object> getStatsAttandances() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<PlatformStatsAttendancesDTO> getStatsAttandances() {
+        PlatformStatsAttendancesDTO platformStatsAttendancesDTO = this.getPlatformStatsService.getAttendanceStats();
+
+        return new ResponseEntity<>(platformStatsAttendancesDTO, HttpStatus.OK);
     }
 
     @GetMapping("/lastupdates")

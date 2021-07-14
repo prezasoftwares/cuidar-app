@@ -367,7 +367,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"attendanceDateTime\": \"2021-06-15T14:00:00.000-03:00\",\r\n    \"notes\": \"{{$randomLoremWords}}\",\r\n    \"linkedFamilyMembers\": [\r\n        \r\n    ],\r\n    \"linkedActionPlanItems\": [\r\n        \r\n    ]\r\n}"
+							"raw": "{\r\n    \"attendanceDateTime\": \"2021-02-13T14:00:00.000-03:00\",\r\n    \"notes\": \"{{$randomLoremWords}}\",\r\n    \"linkedFamilyMembers\": [\r\n        \r\n    ],\r\n    \"linkedActionPlanItems\": [\r\n        \r\n    ]\r\n}"
 						},
 						"url": {
 							"raw": "{{url}}/attendance/{{familyMemberCreatedUUID}}/register",
@@ -796,6 +796,55 @@
 							"path": [
 								"stats",
 								"families"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attendances-Stats-Get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/attendances",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"attendances"
 							]
 						}
 					},

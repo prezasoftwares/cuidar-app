@@ -1,5 +1,6 @@
 package com.cuidar.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,4 +16,5 @@ import org.springframework.stereotype.Repository;
 public interface FamilyAttendanceRecordRepo extends JpaRepository<FamilyAttendanceRecord, UUID> {
     public List<FamilyAttendanceRecord> findBymainFamilyMember(MainFamilyMember mainFamilyMember); 
     Page<FamilyAttendanceRecord> findBymainFamilyMember(MainFamilyMember mainFamilyMember, Pageable pageable);
+    public long countByattendanceDateTimeBetween(Date fromDate, Date toDate);
 }
