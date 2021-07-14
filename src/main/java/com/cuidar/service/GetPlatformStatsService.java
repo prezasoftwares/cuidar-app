@@ -15,10 +15,12 @@ import com.cuidar.dto.PlatformStatsFamiliesDTO;
 import com.cuidar.dto.PlatformStatsGroupedAgeCountDTO;
 import com.cuidar.dto.PlatformStatsGroupedGenderCountDTO;
 import com.cuidar.dto.PlatformStatsGroupedMonthlyAttendanceCountDTO;
+import com.cuidar.dto.PlatformStatsLastUpdatesDTO;
 import com.cuidar.model.enums.FamilyMemberGender;
 import com.cuidar.model.enums.FamilyMemberGeneralStatus;
 import com.cuidar.repository.DependentFamilyMemberRepo;
 import com.cuidar.repository.FamilyAttendanceRecordRepo;
+import com.cuidar.repository.FamilyStatusUpdateRecordRepo;
 import com.cuidar.repository.MainFamilyMemberRepo;
 
 import org.springframework.stereotype.Service;
@@ -29,13 +31,16 @@ public class GetPlatformStatsService {
     private MainFamilyMemberRepo mainFamilyMemberRepo;
     private DependentFamilyMemberRepo dependentFamilyMemberRepo;
     private FamilyAttendanceRecordRepo familyAttendanceRecordRepo;
+    private FamilyStatusUpdateRecordRepo familyStatusUpdateRecordRepo;
 
     public GetPlatformStatsService(MainFamilyMemberRepo mainFamilyMemberRepo,
             DependentFamilyMemberRepo dependentFamilyMemberRepo,
-            FamilyAttendanceRecordRepo familyAttendanceRecordRepo) {
+            FamilyAttendanceRecordRepo familyAttendanceRecordRepo, 
+            FamilyStatusUpdateRecordRepo familyStatusUpdateRecordRepo) {
         this.mainFamilyMemberRepo = mainFamilyMemberRepo;
         this.dependentFamilyMemberRepo = dependentFamilyMemberRepo;
         this.familyAttendanceRecordRepo = familyAttendanceRecordRepo;
+        this.familyStatusUpdateRecordRepo = familyStatusUpdateRecordRepo;
     }
 
     public PlatformStatsFamiliesDTO getFamiliesStats() {
@@ -100,6 +105,40 @@ public class GetPlatformStatsService {
 
         platformStatsAttendancesDTO.setRecentAttendancesCount(lastAttendancesTotal);
         return platformStatsAttendancesDTO;
+    }
+
+    public PlatformStatsLastUpdatesDTO getLastUpdates() {
+        PlatformStatsLastUpdatesDTO platformStatsUpdatesDTO = new PlatformStatsLastUpdatesDTO();
+
+        platformStatsUpdatesDTO.setPromotedFamiliesCount(this.familyStatusUpdateRecordRepo.countBycurrentStatus(FamilyMemberGeneralStatus.Promoted));
+
+        LocalDate finalDate = LocalDate.now();
+        LocalDate startDate = finalDate.withDayOfMonth(1);
+
+        finalDate = finalDate.plusMonths(1).withDayOfMonth(1).minusDays(1);
+
+        long lastAttendancesTotal = 0;
+
+        for (int i = 6; i > 0; i--) {
+
+            Date dtFrom = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date dtTo = Date.from(finalDate.atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
+
+            long count = this.familyStatusUpdateRecordRepo.countByupdateDateTimeBetweenAndcurrentStatus(dtFrom, dtTo, FamilyMemberGeneralStatus.Promoted);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(startDate.getMonthValue()).append("/").append(startDate.getYear());
+            
+            platformStatsUpdatesDTO.getGroupedPromoted().add(new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
+
+            startDate = startDate.minusMonths(1);
+            finalDate = finalDate.withDayOfMonth(1).minusDays(1);
+
+            lastAttendancesTotal += count;
+        }
+
+        platformStatsUpdatesDTO.setRecentPromotedFamiliesCount(lastAttendancesTotal);
+        return platformStatsUpdatesDTO;
     }
 
     private void groupByGender(PlatformStatsFamiliesDTO platformStatsFamiliesDTO) {

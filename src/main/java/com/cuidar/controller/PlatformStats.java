@@ -2,6 +2,7 @@ package com.cuidar.controller;
 
 import com.cuidar.dto.PlatformStatsAttendancesDTO;
 import com.cuidar.dto.PlatformStatsFamiliesDTO;
+import com.cuidar.dto.PlatformStatsLastUpdatesDTO;
 import com.cuidar.service.GetPlatformStatsService;
 
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,9 @@ public class PlatformStats {
     }
 
     @GetMapping("/lastupdates")
-    public ResponseEntity<Object> getLastUpdates() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<PlatformStatsLastUpdatesDTO> getLastUpdates() {
+        PlatformStatsLastUpdatesDTO platformStatsAttendancesDTO = this.getPlatformStatsService.getLastUpdates();
+
+        return new ResponseEntity<>(platformStatsAttendancesDTO, HttpStatus.OK);
     }
 }

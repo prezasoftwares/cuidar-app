@@ -849,6 +849,55 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "LastUpdates-Stats-Get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{apiJWT}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/lastupdates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"lastupdates"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
