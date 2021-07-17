@@ -24,6 +24,9 @@ public interface MainFamilyMemberRepo extends JpaRepository<MainFamilyMember, UU
     @Query("SELECT f.gender as identifier, COUNT(f) as count FROM FamilyMember f GROUP BY f.gender")
     List<Object[]> findFamilyMemberGenderCount();
 
+    @Query("SELECT f.gender as gender, f.birthDate as birthDate, COUNT(f) as count FROM FamilyMember f GROUP BY f.gender, f.birthDate")
+    List<Object[]> findFamilyMemberGenderAndAgeCount();
+
     @Query("SELECT f.birthDate as identifier, COUNT(f) as count FROM FamilyMember f GROUP BY f.birthDate")
     List<Object[]> findFamilyMemberBirthDateCount();
 }

@@ -11,9 +11,8 @@ import lombok.Setter;
 public class PlatformStatsFamiliesDTO {
     private long familiesCount;
     private long familyMembersCount;
-    private List<PlatformStatsGroupedGenderCountDTO> groupedGenders = new ArrayList<>();
     private long pendingApprovalCount;
     private long lastMonthFamiliesCount;
     private long expiredFamiliesCount;
-    private List<PlatformStatsGroupedAgeCountDTO> groupedAges = new ArrayList<>();
+    private List<PlatformStatsGroupedGenderAndAgesCountDTO> groupedGendersAndAges = new ArrayList<>();
 }

@@ -3,7 +3,6 @@ package com.cuidar.service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import com.cuidar.dto.PlatformStatsAttendancesDTO;
 import com.cuidar.dto.PlatformStatsFamiliesDTO;
 import com.cuidar.dto.PlatformStatsGroupedAgeCountDTO;
-import com.cuidar.dto.PlatformStatsGroupedGenderCountDTO;
+import com.cuidar.dto.PlatformStatsGroupedGenderAndAgesCountDTO;
 import com.cuidar.dto.PlatformStatsGroupedMonthlyAttendanceCountDTO;
 import com.cuidar.dto.PlatformStatsLastUpdatesDTO;
 import com.cuidar.model.enums.FamilyMemberGender;
@@ -34,8 +33,7 @@ public class GetPlatformStatsService {
     private FamilyStatusUpdateRecordRepo familyStatusUpdateRecordRepo;
 
     public GetPlatformStatsService(MainFamilyMemberRepo mainFamilyMemberRepo,
-            DependentFamilyMemberRepo dependentFamilyMemberRepo,
-            FamilyAttendanceRecordRepo familyAttendanceRecordRepo, 
+            DependentFamilyMemberRepo dependentFamilyMemberRepo, FamilyAttendanceRecordRepo familyAttendanceRecordRepo,
             FamilyStatusUpdateRecordRepo familyStatusUpdateRecordRepo) {
         this.mainFamilyMemberRepo = mainFamilyMemberRepo;
         this.dependentFamilyMemberRepo = dependentFamilyMemberRepo;
@@ -58,16 +56,13 @@ public class GetPlatformStatsService {
         long expiredFamiliesCount = this.mainFamilyMemberRepo.countByassistenceDueDateLessThan(today.getTime());
         long pendingApprovalCount = this.mainFamilyMemberRepo.countByGeneralStatus(FamilyMemberGeneralStatus.PendingApproval);
 
-        // total de famílias (membros principais)
         platformStatsFamiliesDTO.setFamiliesCount(mainFamilyMembersCount);
-        // total de membros (principais + dependentes)
         platformStatsFamiliesDTO.setFamilyMembersCount(mainFamilyMembersCount + dependentMembersCount);
-
         platformStatsFamiliesDTO.setPendingApprovalCount(pendingApprovalCount);
         platformStatsFamiliesDTO.setLastMonthFamiliesCount(lastMonthFamiliesCount);
         platformStatsFamiliesDTO.setExpiredFamiliesCount(expiredFamiliesCount);
 
-        this.groupByGender(platformStatsFamiliesDTO);
+        this.groupByGenderAndAge(platformStatsFamiliesDTO);
 
         return platformStatsFamiliesDTO;
     }
@@ -94,8 +89,9 @@ public class GetPlatformStatsService {
 
             StringBuilder sb = new StringBuilder();
             sb.append(startDate.getMonthValue()).append("/").append(startDate.getYear());
-            
-            platformStatsAttendancesDTO.getGroupedMonthlyAttendances().add(new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
+
+            platformStatsAttendancesDTO.getGroupedMonthlyAttendances()
+                    .add(new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
 
             startDate = startDate.minusMonths(1);
             finalDate = finalDate.withDayOfMonth(1).minusDays(1);
@@ -104,13 +100,15 @@ public class GetPlatformStatsService {
         }
 
         platformStatsAttendancesDTO.setRecentAttendancesCount(lastAttendancesTotal);
+
         return platformStatsAttendancesDTO;
     }
 
     public PlatformStatsLastUpdatesDTO getLastUpdates() {
         PlatformStatsLastUpdatesDTO platformStatsUpdatesDTO = new PlatformStatsLastUpdatesDTO();
 
-        platformStatsUpdatesDTO.setPromotedFamiliesCount(this.familyStatusUpdateRecordRepo.countBycurrentStatus(FamilyMemberGeneralStatus.Promoted));
+        platformStatsUpdatesDTO.setPromotedFamiliesCount(
+                this.familyStatusUpdateRecordRepo.countBycurrentStatus(FamilyMemberGeneralStatus.Promoted));
 
         LocalDate finalDate = LocalDate.now();
         LocalDate startDate = finalDate.withDayOfMonth(1);
@@ -124,12 +122,14 @@ public class GetPlatformStatsService {
             Date dtFrom = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date dtTo = Date.from(finalDate.atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
 
-            long count = this.familyStatusUpdateRecordRepo.countByupdateDateTimeBetweenAndcurrentStatus(dtFrom, dtTo, FamilyMemberGeneralStatus.Promoted);
+            long count = this.familyStatusUpdateRecordRepo.countByupdateDateTimeBetweenAndcurrentStatus(dtFrom, dtTo,
+                    FamilyMemberGeneralStatus.Promoted);
 
             StringBuilder sb = new StringBuilder();
             sb.append(startDate.getMonthValue()).append("/").append(startDate.getYear());
-            
-            platformStatsUpdatesDTO.getGroupedPromoted().add(new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
+
+            platformStatsUpdatesDTO.getGroupedPromoted()
+                    .add(new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
 
             startDate = startDate.minusMonths(1);
             finalDate = finalDate.withDayOfMonth(1).minusDays(1);
@@ -141,52 +141,56 @@ public class GetPlatformStatsService {
         return platformStatsUpdatesDTO;
     }
 
-    private void groupByGender(PlatformStatsFamiliesDTO platformStatsFamiliesDTO) {
-        // agrupamento por genero
-        List<Object[]> result = this.mainFamilyMemberRepo.findFamilyMemberGenderCount();
-        List<PlatformStatsGroupedGenderCountDTO> groupedGender = new ArrayList<>();
+    private void groupByGenderAndAge(PlatformStatsFamiliesDTO platformStatsFamiliesDTO) {
+        List<Object[]> resultGrouped = this.mainFamilyMemberRepo.findFamilyMemberGenderAndAgeCount();
+        HashMap<FamilyMemberGender, HashMap<Integer, Long>> groupedGenderMap = new HashMap<>();
 
-        if (result != null && !result.isEmpty()) {
-            for (Object[] object : result) {
-                groupedGender.add(new PlatformStatsGroupedGenderCountDTO((FamilyMemberGender)object[0], (Long)object[1]));
+        if (resultGrouped != null && !resultGrouped.isEmpty()) {
+            for (Object[] object : resultGrouped) {
+
+                // resultGrouped[0] = gender
+                // resultGrouped[1] = birthDate
+                // resultGrouped[2] = count
+
+                FamilyMemberGender familyMemberGender = (FamilyMemberGender) object[0];
+                Date birthDate = (Date) object[1];
+                Long count = (Long) object[2];
+
+                HashMap<Integer, Long> ageMap = new HashMap<>();
+                int currentAge = this.getAgeFromDate(birthDate);
+
+                if (groupedGenderMap.containsKey(familyMemberGender)) {
+
+                    ageMap = groupedGenderMap.get(familyMemberGender);
+
+                    if (ageMap.containsKey(currentAge)) {
+                        count += ageMap.get(currentAge);
+                    }
+                } 
+
+                ageMap.put(currentAge, count);
+                groupedGenderMap.put(familyMemberGender, ageMap);
             }
-        }
-        platformStatsFamiliesDTO.setGroupedGenders(groupedGender);
+            
+            groupedGenderMap.forEach((key, value) -> { 
+                PlatformStatsGroupedGenderAndAgesCountDTO familyGenderGrouped = new PlatformStatsGroupedGenderAndAgesCountDTO(key);
+                
+                value.forEach((childKey, childValue) -> {
+                    familyGenderGrouped.getGroupedAges().add(new PlatformStatsGroupedAgeCountDTO(childKey, childValue));
+                    familyGenderGrouped.setCount(familyGenderGrouped.getCount() + childValue);
+                });
 
-        this.groupByAge(platformStatsFamiliesDTO);
+                platformStatsFamiliesDTO.getGroupedGendersAndAges().add(familyGenderGrouped);
+            });
+            
+        }
     }
 
-    private void groupByAge(PlatformStatsFamiliesDTO platformStatsFamiliesDTO){
+    private Integer getAgeFromDate(Date birthDate) {
         Date now = Calendar.getInstance().getTime();
-        // agrupamento por faixa etária
-        List<Object[]> result = this.mainFamilyMemberRepo.findFamilyMemberBirthDateCount();
-        List<PlatformStatsGroupedAgeCountDTO> groupedBirthDate = new ArrayList<>();
-        HashMap<Integer, Long> map = new HashMap<>();
+        long diffInMillies = Math.abs(birthDate.getTime() - now.getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-        if (result != null && !result.isEmpty()) {
-            for (Object[] object : result) {
-
-                Date birthDate = (Date)object[0];
-
-                long diffInMillies = Math.abs(birthDate.getTime() - now.getTime());
-                long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-                int ticaTica = (int)(diff / 365);
-
-                long currentCount = (Long)object[1];
-                if (map.containsKey(ticaTica))
-                {
-                    currentCount += map.get(ticaTica);
-                }
-
-                map.put(ticaTica, currentCount);
-            }
-
-            map.forEach((key, value) -> {
-                groupedBirthDate.add(new PlatformStatsGroupedAgeCountDTO(key, value));
-            });
-        }
-
-        platformStatsFamiliesDTO.setGroupedAges(groupedBirthDate);
+        return (int) (diff / 365);
     }
 }
