@@ -3,6 +3,8 @@ services:
   postgres:
     image: postgres:13
     restart: always
+    volumes:
+      - .pgdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=cuidar
       - POSTGRES_USER=cuidarapiuser 
