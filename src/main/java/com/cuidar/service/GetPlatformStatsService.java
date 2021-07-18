@@ -9,12 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.cuidar.dto.PlatformStatsAttendancesDTO;
+import com.cuidar.dto.PlatformRecentStatsDTO;
 import com.cuidar.dto.PlatformStatsFamiliesDTO;
 import com.cuidar.dto.PlatformStatsGroupedAgeCountDTO;
 import com.cuidar.dto.PlatformStatsGroupedGenderAndAgesCountDTO;
-import com.cuidar.dto.PlatformStatsGroupedMonthlyAttendanceCountDTO;
-import com.cuidar.dto.PlatformStatsLastUpdatesDTO;
+import com.cuidar.dto.PlatformRecentStatsByMonthDTO;
 import com.cuidar.model.enums.FamilyMemberGender;
 import com.cuidar.model.enums.FamilyMemberGeneralStatus;
 import com.cuidar.repository.DependentFamilyMemberRepo;
@@ -67,11 +66,11 @@ public class GetPlatformStatsService {
         return platformStatsFamiliesDTO;
     }
 
-    public PlatformStatsAttendancesDTO getAttendanceStats() {
+    public PlatformRecentStatsDTO getAttendanceStats() {
 
-        PlatformStatsAttendancesDTO platformStatsAttendancesDTO = new PlatformStatsAttendancesDTO();
+        PlatformRecentStatsDTO platformStatsAttendancesDTO = new PlatformRecentStatsDTO();
 
-        platformStatsAttendancesDTO.setAttendancesCount(this.familyAttendanceRecordRepo.count());
+        platformStatsAttendancesDTO.setTotalCount(this.familyAttendanceRecordRepo.count());
 
         LocalDate finalDate = LocalDate.now();
         LocalDate startDate = finalDate.withDayOfMonth(1);
@@ -90,8 +89,8 @@ public class GetPlatformStatsService {
             StringBuilder sb = new StringBuilder();
             sb.append(startDate.getMonthValue()).append("/").append(startDate.getYear());
 
-            platformStatsAttendancesDTO.getGroupedMonthlyAttendances()
-                    .add(0, new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
+            platformStatsAttendancesDTO.getGroupedMonthlyCount()
+                    .add(0, new PlatformRecentStatsByMonthDTO(sb.toString(), count));
 
             startDate = startDate.minusMonths(1);
             finalDate = finalDate.withDayOfMonth(1).minusDays(1);
@@ -99,15 +98,15 @@ public class GetPlatformStatsService {
             lastAttendancesTotal += count;
         }
 
-        platformStatsAttendancesDTO.setRecentAttendancesCount(lastAttendancesTotal);
+        platformStatsAttendancesDTO.setRecentCount(lastAttendancesTotal);
 
         return platformStatsAttendancesDTO;
     }
 
-    public PlatformStatsLastUpdatesDTO getLastUpdates() {
-        PlatformStatsLastUpdatesDTO platformStatsUpdatesDTO = new PlatformStatsLastUpdatesDTO();
+    public PlatformRecentStatsDTO getLastUpdates() {
+        PlatformRecentStatsDTO platformStatsUpdatesDTO = new PlatformRecentStatsDTO();
 
-        platformStatsUpdatesDTO.setPromotedFamiliesCount(
+        platformStatsUpdatesDTO.setTotalCount(
                 this.familyStatusUpdateRecordRepo.countBycurrentStatus(FamilyMemberGeneralStatus.Promoted));
 
         LocalDate finalDate = LocalDate.now();
@@ -128,8 +127,8 @@ public class GetPlatformStatsService {
             StringBuilder sb = new StringBuilder();
             sb.append(startDate.getMonthValue()).append("/").append(startDate.getYear());
 
-            platformStatsUpdatesDTO.getGroupedPromoted()
-                    .add(new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
+            platformStatsUpdatesDTO.getGroupedMonthlyCount()
+                    .add(new PlatformRecentStatsByMonthDTO(sb.toString(), count));
 
             startDate = startDate.minusMonths(1);
             finalDate = finalDate.withDayOfMonth(1).minusDays(1);
@@ -137,7 +136,7 @@ public class GetPlatformStatsService {
             lastAttendancesTotal += count;
         }
 
-        platformStatsUpdatesDTO.setRecentPromotedFamiliesCount(lastAttendancesTotal);
+        platformStatsUpdatesDTO.setRecentCount(lastAttendancesTotal);
         return platformStatsUpdatesDTO;
     }
 
