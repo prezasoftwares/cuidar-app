@@ -91,7 +91,7 @@ public class GetPlatformStatsService {
             sb.append(startDate.getMonthValue()).append("/").append(startDate.getYear());
 
             platformStatsAttendancesDTO.getGroupedMonthlyAttendances()
-                    .add(new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
+                    .add(0, new PlatformStatsGroupedMonthlyAttendanceCountDTO(sb.toString(), count));
 
             startDate = startDate.minusMonths(1);
             finalDate = finalDate.withDayOfMonth(1).minusDays(1);
