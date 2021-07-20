@@ -80,6 +80,16 @@ public class FamilyAttendanceService {
             familyAttendanceRecordLinkedMember.setAttendanceReport(savedAttendanceReport);
             familyAttendanceRecordLinkedMember.setReferencedFamilyMember(this.familyMemberResolverService.resolveFamilyMember(item));
             list.add(familyAttendanceRecordLinkedMember);
+
+            if (familyAttendanceRecord.getSummaryFamilyMembers() == null){
+                familyAttendanceRecord.setSummaryFamilyMembers(familyAttendanceRecordLinkedMember.getReferencedFamilyMember().getFullName());
+            }
+            else{
+                familyAttendanceRecord.setSummaryFamilyMembers(familyAttendanceRecord.getSummaryFamilyMembers() + 
+                                                                ", " + 
+                                                                familyAttendanceRecordLinkedMember.getReferencedFamilyMember().getFullName());
+            }
+
         });
 
         this.familyAttendanceRecordLinkedMemberRepo.saveAll(list);
